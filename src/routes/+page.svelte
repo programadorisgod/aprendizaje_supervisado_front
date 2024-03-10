@@ -14,13 +14,14 @@
 {:else if $appStatus === APP_STATUS.ERROR}
 	<Alert>
 		<span class="font-medium">¡Algo ha salido mal!</span>
-		Cambie algunas cosas e intente enviarlas nuevamente.
+		Cambie algunas cosas e intente enviarlas nuevamente, por ejemplo que el archivo tenga extension:
+		".csv, .txt, .xlsx"
 	</Alert>
 {:else if $appStatus === APP_STATUS.MODEL_MODE}
 	<StepModel />
 {:else}
 	<Alert>
 		<span class="font-medium">Error</span>
-		Este estado de la apliacación no está soportado.
+		Este estado de la apliacación no está registrado.
 	</Alert>
 {/if}

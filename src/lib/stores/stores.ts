@@ -20,3 +20,7 @@ export const setAppStatusError = () => {
 export const setAppStatusModelMode = () => {
 	appStatus.set(APP_STATUS.MODEL_MODE)
 }
+
+export const setAppStatusUnknowError = () => {
+	appStatus.set(-2)
+}

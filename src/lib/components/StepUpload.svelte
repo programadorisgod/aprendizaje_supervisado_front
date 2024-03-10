@@ -3,8 +3,7 @@
 	import type FileSelectEventDetail from '$lib/interface/interfaceFilesSelect'
 	import { type file } from '$lib/types/file'
 	import { setAppStatusError, setAppStatusLoading, setAppStatusModelMode } from '$lib/stores/stores'
-	import { fetchFile } from '$lib/utils/fetchData'
-    
+	import { fetchFile } from '$lib/utils/fetchFile'
 
 	let files: file = {
 		accepted: [],
@@ -18,15 +17,17 @@
 
 		if (files.accepted.length > 0) {
 			setAppStatusLoading()
-			fetchFile(acceptedFiles[0])
-			setAppStatusModelMode()
+			await fetchFile(acceptedFiles[0])
+			return
 		}
+		setAppStatusError()
 	}
 </script>
 
-<Dropzone on:drop={handleFilesSelect} multiple={false} accept=".csv, .json, .txt, .xlsx">
+<Dropzone on:drop={handleFilesSelect} multiple={false} accept=".csv, .txt, .xlsx">
 	Arrastra y suelta aquí tu archivo
 </Dropzone>
+
 <ol>
 	{#each files.accepted as item}
 		<li>{item.name}</li>
