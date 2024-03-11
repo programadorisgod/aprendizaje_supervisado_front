@@ -2,7 +2,7 @@
 	import Dropzone from 'svelte-file-dropzone'
 	import type FileSelectEventDetail from '$lib/interface/interfaceFilesSelect'
 	import { type file } from '$lib/types/file'
-	import { setAppStatusError, setAppStatusLoading, setAppStatusModelMode } from '$lib/stores/stores'
+	import { setAppStatusError, setAppStatusLoading } from '$lib/stores/stores'
 	import { fetchFile } from '$lib/utils/fetchFile'
 
 	let files: file = {
