@@ -1,0 +1,8 @@
+.step {
+	transition: opacity 0.5s ease-in-out;
+}
+
+.fade_hidden {
+	opacity: 0;
+	visibility: hidden;
+}

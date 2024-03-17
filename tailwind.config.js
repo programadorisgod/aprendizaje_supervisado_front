@@ -7,6 +7,7 @@ export default {
 
   theme: {
     extend: {
+
       colors: {
         // flowbite-svelte
         primary: {
