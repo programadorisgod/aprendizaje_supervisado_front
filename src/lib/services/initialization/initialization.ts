@@ -37,6 +37,7 @@ export default function initialization(neuron: neurone): training {
 			}
 
 			// Error producido en el patron
+			ep.push(0)
 			for (let i = 0; i < neuron.numOutputs; i++) {
 				ep[p] += el[i]
 			}
