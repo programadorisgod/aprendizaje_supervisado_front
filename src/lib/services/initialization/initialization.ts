@@ -66,9 +66,12 @@ export default function initialization(neuron: neurone): training {
 		iteration++
 	}
 
+	console.log(iteration)
+	console.log(iterationError)
+
 	return {
 		iterations: iteration,
-		iterationError: iterationError.slice(1),
+		iterationError: iterationError.slice(1, iteration),
 		weights: w,
 		thresholds: u
 	}
