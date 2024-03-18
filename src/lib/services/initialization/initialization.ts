@@ -62,6 +62,8 @@ export default function initialization(neuron: neurone): training {
 			iterationError[iteration] += ep[i]
 		}
 		iterationError[iteration] = iterationError[iteration] / ep.length
+
+		iteration++
 	}
 
 	return {
