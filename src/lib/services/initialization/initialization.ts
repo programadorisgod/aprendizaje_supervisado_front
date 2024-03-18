@@ -6,7 +6,7 @@ export default function initialization(neuron: neurone): training {
 	let w: number[][] = neuron.weights // pesos
 	let u: number[] = neuron.thresholds // umbrales
 
-	while (neuron.maxError <= iterationError.at(-1)! && iteration >= neuron.iterations) {
+	while (neuron.maxError < iterationError.at(-1)! && iteration <= neuron.iterations) {
 		// mayor o igual al error?
 		let ep: number[] = [] // Error patron
 
