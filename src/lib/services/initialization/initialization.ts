@@ -18,6 +18,7 @@ export default function initialization(neuron: neurone): training {
 			// Por cada salida y entrada
 			for (let i = 0; i <= neuron.numOutputs; i++) {
 				// Salidas de la red
+				s.push(0)
 				for (let j = 0; j < neuron.numEntries; j++) {
 					s[i] += neuron.dataBase[p][0][j] * w[j][i]
 				}
@@ -26,11 +27,8 @@ export default function initialization(neuron: neurone): training {
 				s[i] = s[i] - u[i]
 
 				// Salidas reales
-				if (s[i] >= 0) {
-					yr[i] = 1
-				} else {
-					yr[i] = 0
-				}
+
+				yr[i] = s[i] >= 0 ? 1 : 0
 
 				// Error lineal
 				el[i] = neuron.dataBase[p][1][i] - yr[i]
@@ -55,6 +53,7 @@ export default function initialization(neuron: neurone): training {
 				u[i] = u[i] + neuron.learningRat * el[i] * 1
 			}
 		}
+		console.log(w)
 
 		// Error de iteracion
 		iterationError.push(0) // nuevo error
@@ -62,13 +61,12 @@ export default function initialization(neuron: neurone): training {
 		for (let i = 0; i < ep.length; i++) {
 			iterationError[iteration] += ep[i]
 		}
-		iterationError[iteration] = iterationError[iteration] / ep.length
+		iterationError[iteration] /= neuron.numPatterns
+
+		console.log(iterationError)
 
 		iteration++
 	}
-
-	console.log(iteration - 1)
-	console.log(iterationError.slice(1, iteration))
 
 	return {
 		iterations: iteration - 1,

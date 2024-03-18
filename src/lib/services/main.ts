@@ -9,21 +9,27 @@ export default function supervisedLearningMain(
 	let dataBase: [number[], number[]][] = [
 		[
 			// entradas del patrón 1
-			[0.1, 0.2],
+			[0, 0, 0],
 			// salidas del patrón 1
-			[0.3, 0.4]
+			[0, 0]
 		],
 		[
-			// entradas del patrón 2
-			[0.5, 0.6],
-			// salidas del patrón 2
-			[0.7, 0.8]
+			// entradas del patrón 1
+			[1, 0, 1],
+			// salidas del patrón 1
+			[0, 1]
 		],
 		[
-			// entradas del patrón 3
-			[0.9, 1.0],
-			// salidas del patrón 3
-			[1.1, 1.2]
+			// entradas del patrón 1
+			[1, 1, 0],
+			// salidas del patrón 1
+			[1, 0]
+		],
+		[
+			// entradas del patrón 1
+			[1, 1, 1],
+			// salidas del patrón 1
+			[1, 1]
 		]
 	]
 
