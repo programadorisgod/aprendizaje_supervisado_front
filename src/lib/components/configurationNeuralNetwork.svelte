@@ -32,7 +32,8 @@
 
 	const handleOnSubmit = (event: SubmitEvent) => {
 		event.preventDefault()
-
+       console.log(valueInputError, valueInputError, valueInputIterations);
+	   
 		if (
 			valueInputError === undefined ||
 			valueInputRat === undefined ||
@@ -62,6 +63,7 @@
 
 	const handleKeyUpIterations = (event: Event) => {
 		const target = event?.target as HTMLInputElement
+		
 		valueInputIterations = parseInt(target?.value)
 	}
 	const handleKeyUpRat = (event: Event) => {
@@ -138,6 +140,7 @@
 				placeholder="Iteraciones"
 				min={1}
 				on:keyup={handleKeyUpIterations}
+				on:input={handleKeyUpIterations}
 			/>
 
 			<label for="rata"> Rata de aprendizaje </label>
