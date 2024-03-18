@@ -58,7 +58,7 @@
 		}
 
 		const values = supervisedLearningMain(valueInputIterations, valueInputRat, valueInputError)
-		console.log(values)
+		console.log(values, 'value')
 	}
 
 	const handleKeyUpIterations = (event: Event) => {
