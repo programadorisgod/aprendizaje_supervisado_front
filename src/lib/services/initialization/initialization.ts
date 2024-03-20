@@ -53,7 +53,6 @@ export default function initialization(neuron: neurone): training {
 				u[i] = u[i] + neuron.learningRat * el[i] * 1
 			}
 		}
-		console.log(w)
 
 		// Error de iteracion
 		iterationError.push(0) // nuevo error

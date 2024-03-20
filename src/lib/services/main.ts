@@ -1,37 +1,22 @@
+import axios from 'axios'
 import initialization from './initialization/initialization'
 import type { training } from './interface'
 
-export default function supervisedLearningMain(
+interface response {
+	data: [number[], number[]][]
+}
+
+export default async function supervisedLearningMain(
 	iterations: number,
 	learningRat: number,
 	maxError: number
-): training {
-	let dataBase: [number[], number[]][] = [
-		[
-			// entradas del patrón 1
-			[0, 0, 0],
-			// salidas del patrón 1
-			[0, 0]
-		],
-		[
-			// entradas del patrón 1
-			[1, 0, 1],
-			// salidas del patrón 1
-			[0, 1]
-		],
-		[
-			// entradas del patrón 1
-			[1, 1, 0],
-			// salidas del patrón 1
-			[1, 0]
-		],
-		[
-			// entradas del patrón 1
-			[1, 1, 1],
-			// salidas del patrón 1
-			[1, 1]
-		]
-	]
+): Promise<training> {
+	const { VITE_BASE_URL } = import.meta.env
+	let dataBase: [number[], number[]][] = []
+	/* await axios.get<response>(`${VITE_BASE_URL}`).then((response) => {
+		dataBase = response.data;
+		console.log(response.data)
+	}) */
 
 	let numEntries: number = dataBase[0][0].length // entradas
 	let numOutputs: number = dataBase[0][1].length // salidas
