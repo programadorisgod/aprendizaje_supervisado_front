@@ -1,3 +1,4 @@
+import initWU from '../init-w-u/init-w-u'
 import type { neurone, training } from '../interface'
 
 export default function initialization(neuron: neurone): training {
@@ -46,7 +47,7 @@ export default function initialization(neuron: neurone): training {
 			for (let i = 0; i < neuron.numOutputs; i++) {
 				// Nueva matriz de pesos
 				for (let j = 0; j < neuron.numEntries; j++) {
-					w[j][i] = w[j][i] + neuron.learningRat * el[i] * neuron.dataBase[p][0][j] // logica matriz pesos w[j][i]?
+					w[j][i] = w[j][i] + neuron.learningRat * el[i] * neuron.dataBase[p][0][j]
 				}
 
 				// Nuevo vector de umbrales
@@ -62,10 +63,17 @@ export default function initialization(neuron: neurone): training {
 		}
 		iterationError[iteration] /= neuron.numPatterns
 
-		console.log(iterationError)
+		// Cambiar pesos y umbrales si se esta repitiendo mucho el error
+		if (iteration % 3 == 0 && iterationError.at(-1) == iterationError[iteration - 1]) {
+			const obj = initWU(neuron.numEntries, neuron.numOutputs)
+			w = obj.weight
+			u = obj.thresholds
+		}
 
 		iteration++
 	}
+
+	console.log(iterationError)
 
 	return {
 		iterations: iteration - 1,

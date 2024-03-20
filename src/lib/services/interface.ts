@@ -16,3 +16,8 @@ export interface training {
 	thresholds: number[]
 	iterationError: number[]
 }
+
+export interface init {
+	weight: number[][]
+	thresholds: number[]
+}
