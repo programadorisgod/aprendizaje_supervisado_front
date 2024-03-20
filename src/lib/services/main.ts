@@ -1,4 +1,4 @@
-import axios from 'axios'
+import fetchData from '$lib/utils/fetchData'
 import initialization from './initialization/initialization'
 import type { training } from './interface'
 
@@ -13,10 +13,11 @@ export default async function supervisedLearningMain(
 ): Promise<training> {
 	const { VITE_BASE_URL } = import.meta.env
 	let dataBase: [number[], number[]][] = []
-	/* await axios.get<response>(`${VITE_BASE_URL}`).then((response) => {
-		dataBase = response.data;
-		console.log(response.data)
-	}) */
+	try {
+		dataBase = await fetchData()
+	} catch (error) {
+		console.log(error)
+	}
 
 	let numEntries: number = dataBase[0][0].length // entradas
 	let numOutputs: number = dataBase[0][1].length // salidas
