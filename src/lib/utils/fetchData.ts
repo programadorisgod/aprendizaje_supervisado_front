@@ -1,9 +1,10 @@
 import { setAppStatusUnknowError } from '$lib/stores/stores'
 
-export default async function fetchData(params: string) {
+export default async function fetchData(params?: string) {
 	const { VITE_BASE_URL } = import.meta.env
 	try {
-		const res = await fetch(`${VITE_BASE_URL}/${params}`)
+		const uri = params ? `${VITE_BASE_URL}/${params}` : VITE_BASE_URL
+		const res = await fetch(uri)
 
 		if (!res.ok) {
 			setAppStatusUnknowError()
