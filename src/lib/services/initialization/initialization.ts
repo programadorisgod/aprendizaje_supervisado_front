@@ -28,7 +28,6 @@ export default function initialization(neuron: neurone): training {
 				s[i] = s[i] - u[i]
 
 				// Salidas reales
-
 				yr[i] = s[i] >= 0 ? 1 : 0
 
 				// Error lineal
