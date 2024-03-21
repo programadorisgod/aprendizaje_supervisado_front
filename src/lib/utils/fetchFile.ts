@@ -1,8 +1,12 @@
 import {
+	appStatus,
+	fetchDataToSimulation,
 	setAppStatusError,
 	setAppStatusModelMode,
+	setAppStatusSimulationMode,
 	setAppStatusUnknowError
 } from '$lib/stores/stores'
+import { get } from 'svelte/store'
 
 export const fetchFile = async (file: File): Promise<void> => {
 	const { VITE_BASE_URL } = import.meta.env
@@ -19,7 +23,12 @@ export const fetchFile = async (file: File): Promise<void> => {
 			setAppStatusError()
 			return
 		}
-		setAppStatusModelMode()
+
+		if (get(fetchDataToSimulation)) {
+			setAppStatusSimulationMode()
+		} else {
+			setAppStatusModelMode()
+		}
 	} catch (error) {
 		setAppStatusUnknowError()
 	}

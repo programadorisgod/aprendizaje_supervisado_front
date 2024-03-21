@@ -21,7 +21,7 @@
 		</ul>
 	{/each}
 	<NeuralNetwork {input_params} />
-	<ConfigurationNeuralNetwork />
+	<ConfigurationNeuralNetwork {input_params} />
 {:else}
 	<StepLoading data="Obteniendo los parametros de entrada..." />
 {/if}

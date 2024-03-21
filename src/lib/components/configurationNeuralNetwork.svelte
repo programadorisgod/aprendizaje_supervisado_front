@@ -2,10 +2,14 @@
 	import { Select, type SelectOptionType } from 'flowbite-svelte'
 	import './css/configurationNeuralNetwork.css'
 	import InputsParamsConfiguration from './inputsParamsConfiguration.svelte'
+	import initWU from '$lib/services/init-w-u/init-w-u'
 
+	export let input_params: Array<Array<number>>
 	let isChecked = false
 	let nextStep: Element | null | undefined
 	let currentStep2: Element | null | undefined
+	let weightArray: number[][]
+	let thresholdsArray: number[]
 
 	let selectedFunctions: string
 	let selectedAlogrithms: string
@@ -13,6 +17,9 @@
 	let algorithms: SelectOptionType<any>[] = [{ name: 'Regla Delta', value: 'Regla Delta' }]
 
 	const hanleClickCheckBox = () => {
+		const { weight, thresholds } = initWU(input_params[0][0], input_params[0][1])
+		weightArray = weight
+		thresholdsArray = thresholds
 		isChecked = !isChecked
 	}
 
@@ -29,7 +36,7 @@
 
 			nextStep?.classList.remove('fade_hidden')
 			window.scroll({
-				top: 100,
+				top: 200,
 				left: 0,
 				behavior: 'smooth'
 			})
@@ -49,7 +56,7 @@
 </script>
 
 <section class="mt-12 text-white">
-	<div class="step flex">
+	<div class="step flex flex-col">
 		<label>
 			<input
 				on:click={hanleClickCheckBox}
@@ -60,6 +67,12 @@
 			/>
 			Inicializar pesos y umbrales
 		</label>
+		{#if isChecked}
+			<div class="mt-3 mb-3">
+				<p>Matriz de pesos:[{weightArray.map((row) => row.join(' , ') + '  ')}]</p>
+				<p>Vector de umbrales: [{thresholdsArray.join(' , ')}]</p>
+			</div>
+		{/if}
 	</div>
 
 	<div class="step flex flex-col fade_hidden">
@@ -73,5 +86,5 @@
 		</label>
 	</div>
 
-	<InputsParamsConfiguration />
+	<InputsParamsConfiguration weight={weightArray} thresholds={thresholdsArray} />
 </section>

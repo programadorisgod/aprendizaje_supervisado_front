@@ -5,12 +5,15 @@
 	import StepUpload from '$components/StepUpload.svelte'
 	import StepLoading from '$components/StepLoading.svelte'
 	import StepModel from '$components/StepModel.svelte'
+	import StepTrainingTheNeuralNetwork from '$components/StepTrainingTheNeuralNetwork.svelte'
+	import StepUploadSimulation from '$components/StepUploadSimulation.svelte'
+	import StepSimulationMode from '$components/StepSimulationMode.svelte'
 </script>
 
 {#if $appStatus === APP_STATUS.INIT}
 	<StepUpload />
 {:else if $appStatus === APP_STATUS.LOADING}
-	<StepLoading />
+	<StepLoading data={'Subiendo el archivo y extrayendo la información...'} />
 {:else if $appStatus === APP_STATUS.ERROR}
 	<Alert>
 		<span class="font-medium">¡Algo ha salido mal!</span>
@@ -19,6 +22,12 @@
 	</Alert>
 {:else if $appStatus === APP_STATUS.MODEL_MODE}
 	<StepModel />
+{:else if $appStatus === APP_STATUS.TRAINING_MODE}
+	<StepTrainingTheNeuralNetwork />
+{:else if $appStatus === APP_STATUS.UPLOAD_SIMULATION_MODE}
+	<StepUploadSimulation />
+{:else if $appStatus === APP_STATUS.SIMULATION_MODE}
+	<StepSimulationMode />
 {:else}
 	<Alert>
 		<span class="font-medium">Error</span>

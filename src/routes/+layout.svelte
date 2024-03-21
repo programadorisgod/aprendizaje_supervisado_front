@@ -9,7 +9,7 @@
 	<h1 class="text-6xl opacity-70 font-bold text-center pb-10 text-slate-50">
 		Aprendizaje Supervisado
 	</h1>
-	<section class="container max-w-xl h-64 mx-auto pl-10 mt-9">
+	<section class="container w-full h-64 mx-auto pl-10 mt-9">
 		<slot />
 	</section>
 </main>

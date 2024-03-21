@@ -1,12 +1,21 @@
 <script lang="ts">
-	import supervisedLearningMain from "$lib/services/main"
-	import showError from "$lib/utils/valitadeInputs"
-	import { Alert } from "flowbite-svelte"
+	import supervisedLearningMain from '$lib/services/main'
+	import {
+		appStatus,
+		setAppStatusLoading,
+		setAppStatusTrainingMode,
+		setSimulationValues
+	} from '$lib/stores/stores'
+	import type { SimulationValues } from '$lib/types/simulationValues'
+	import showError from '$lib/utils/valitadeInputs'
+	import { Alert } from 'flowbite-svelte'
+	export let weight: number[][]
+	export let thresholds: number[]
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
 	let valueInputIterations: number | undefined
-    let invalidRat: boolean
+	let invalidRat: boolean
 	let invalidError: boolean
 	let isVisbleError: boolean = false
 
@@ -25,9 +34,7 @@
 		valueInputError = parseFloat(target?.value)
 	}
 
-
-
-	const handleOnSubmit = (event: SubmitEvent) => {
+	const handleOnSubmit = async (event: SubmitEvent) => {
 		event.preventDefault()
 
 		if (showError(valueInputError, valueInputRat, valueInputIterations)) {
@@ -49,8 +56,26 @@
 			invalidError = false
 		}
 
-		const values = supervisedLearningMain(valueInputIterations!, valueInputRat!, valueInputError!)
-		console.log(values, 'value')
+		setAppStatusLoading('Entrenando...')
+
+		const values = await supervisedLearningMain(
+			valueInputIterations!,
+			valueInputRat!,
+			valueInputError!,
+			weight,
+			thresholds
+		)
+
+		if (values !== undefined) {
+			const sm: SimulationValues = {
+				weights: values.weights,
+				thresholds: values.thresholds
+			}
+			setSimulationValues(sm)
+			setTimeout(() => {
+				setAppStatusTrainingMode(values, valueInputError!)
+			}, 2000)
+		}
 	}
 </script>
 
