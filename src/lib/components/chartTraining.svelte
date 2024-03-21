@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { setIsvisibleSimulation, trainingValues } from '$lib/stores/stores'
-	import Chart, { type ChartItem } from 'chart.js/auto'
+	import Chart from 'chart.js/auto'
 	import { onMount } from 'svelte'
 
 	let container: HTMLCanvasElement | null

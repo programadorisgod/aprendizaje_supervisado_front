@@ -46,12 +46,16 @@
 
 		if (valueInputRat! <= 0 || valueInputRat! > 1) {
 			invalidRat = true
+			return
 		} else {
 			invalidRat = false
 		}
-
+		console.log(valueInputError)
 		if (valueInputError! < 0 || valueInputError! > 0.1) {
+			console.log('entro')
+
 			invalidError = true
+			return
 		} else {
 			invalidError = false
 		}

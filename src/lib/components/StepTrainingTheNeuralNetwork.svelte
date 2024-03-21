@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Chart from './chart.svelte'
+	import Chart from './chartTraining.svelte'
 	import {
 		setAppStatusModelMode,
 		trainingValues,

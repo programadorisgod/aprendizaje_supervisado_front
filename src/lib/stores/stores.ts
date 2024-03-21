@@ -37,6 +37,10 @@ export const setAppStatusLoading = (message?: string) => {
 	}
 }
 
+export const setAppInitMode = () => {
+	appStatus.set(APP_STATUS.INIT)
+}
+
 export const setAppStatusError = () => {
 	appStatus.set(APP_STATUS.ERROR)
 }
