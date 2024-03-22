@@ -50,9 +50,7 @@
 		} else {
 			invalidRat = false
 		}
-		console.log(valueInputError)
 		if (valueInputError! < 0 || valueInputError! > 0.1) {
-			console.log('entro')
 
 			invalidError = true
 			return

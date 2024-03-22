@@ -1,18 +1,36 @@
 <script lang="ts">
+	import {
+		Table,
+		TableBody,
+		TableBodyCell,
+		TableBodyRow,
+		TableHead,
+		TableHeadCell
+	} from 'flowbite-svelte'
 	import { Line } from 'svelte-chartjs'
+	import EndOfTraining from './endOfTraining.svelte'
 
 	export let labels: number[][]
 	export let data: number[][]
 	let expectOuputs: number[][] | number[]
+	let YDs: string[] | number[] = []
+	let YRs: string[] | number[] = []
 
 	const realOuputs = labels.map((label: number[]) => label[1])
+
+	const p = labels.map((labels: string[]) => labels[0].join(' '))
 	const patrons = Array.from({ length: labels.length }, (_, index) => index)
 
 	if (data[0]?.length > 1) {
 		expectOuputs = data.map((row) => row)
+		YDs = expectOuputs.map((row) => row.join(' '))
+		YRs = realOuputs.map((row) => row.join(' '))
 	} else {
 		expectOuputs = data.map((row) => row[0])
+		YDs = expectOuputs
+		YRs = realOuputs
 	}
+
 
 	const dataChart = {
 		labels: patrons,
@@ -61,9 +79,41 @@
 			}
 		]
 	}
+
+	
+	const dataTable = patrons.map((patron, index) => {
+		return {
+			patron: p[index],
+			YD: YDs[index],
+			YR: YRs[index]
+		}
+	})
 </script>
 
-<div class="w-full min-h-96 bg-slate-50">
-	<h3 class=" w-full text-center bg-white">Gráfica de la simulación</h3>
-	<Line data={dataChart} options={{ responsive: true }} />
+<div class="w-full min-h-96 bg-slate-50 mb-2">
+	<section>
+		<h3 class=" w-full text-center bg-white">Gráfica de la simulación</h3>
+		<Line data={dataChart} options={{ responsive: true }} />
+		<div class="bg-[#111827] mt-2">
+			<Table color="blue">
+				<TableHead>
+					<TableHeadCell>Patrón</TableHeadCell>
+					<TableHeadCell>YR</TableHeadCell>
+					<TableHeadCell>YD</TableHeadCell>
+				</TableHead>
+				<TableBody tableBodyClass="divide-y">
+					{#each dataTable as patron}
+						<TableBodyRow>
+							<TableBodyCell>{patron.patron}</TableBodyCell>
+							<TableBodyCell>{patron.YR}</TableBodyCell>
+							<TableBodyCell>{patron.YD}</TableBodyCell>
+						</TableBodyRow>
+					{/each}
+				</TableBody>
+			</Table>
+		</div>
+	</section>
+	<div class="relative">
+		<EndOfTraining />
+	</div>
 </div>
