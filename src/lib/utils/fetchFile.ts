@@ -1,5 +1,4 @@
 import {
-	appStatus,
 	fetchDataToSimulation,
 	setAppStatusError,
 	setAppStatusModelMode,
@@ -15,7 +14,7 @@ export const fetchFile = async (file: File): Promise<void> => {
 	formData.append('file', file)
 
 	try {
-		const res = await fetch(`${VITE_BASE_URL}/upload_file`, {
+		const res = await fetch(`${VITE_BASE_URL}/upload-file`, {
 			method: 'POST',
 			body: formData
 		})

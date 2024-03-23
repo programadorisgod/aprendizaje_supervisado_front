@@ -8,7 +8,7 @@
 	let input_params: Array<Array<number>>
 
 	onMount(async () => {
-		input_params = await fetchData('input_params')
+		input_params = await fetchData('input-params')
 	})
 </script>
 
