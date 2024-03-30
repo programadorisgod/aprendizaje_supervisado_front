@@ -3,10 +3,12 @@
 	import {
 		setAppStatusModelMode,
 		trainingValues,
-		isVisbleSimulation,
+		simulationValues,
 		setAppStatusSimulationUploadMode,
-		setFetchDataToSimulation
+		setFetchDataToSimulation,
+		isVisibleSimulation
 	} from '$lib/stores/stores'
+	import fetchData from '$lib/utils/fetchData'
 	let backToTraining: boolean = false
 
 	const IE = $trainingValues.iterationError
@@ -19,6 +21,11 @@
 		} else {
 			setFetchDataToSimulation()
 			setAppStatusSimulationUploadMode()
+			const body = {
+			  weights: $simulationValues.weights,
+			  thresholds: $simulationValues.thresholds
+			}
+			fetchData("file", body)
 		}
 	}
 </script>
@@ -30,7 +37,7 @@
 	</section>
 	<section class="flex flex-col items-center font-bold">
 		<p class="text-cyan-50">
-			{$isVisbleSimulation && backToTraining
+			{$isVisibleSimulation && backToTraining
 				? 'El entrenamiento no se completó satisfactoriaente, por favor vuelva a entrenar'
 				: 'Ahora que está listo el entrenamiento, puede empezar la simulación'}
 		</p>

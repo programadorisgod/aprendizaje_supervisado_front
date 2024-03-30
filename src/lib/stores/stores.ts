@@ -25,8 +25,8 @@ export const sm: SimulationValues = {
 export const appStatus = writable(APP_STATUS.INIT)
 export const loadingMessage = writable('')
 export const trainingValues = writable(tv)
-export const isVisbleSimulation = writable<boolean>(false)
-export const simultaionValues = writable(sm)
+export const isVisibleSimulation = writable<boolean>(false)
+export const simulationValues = writable(sm)
 export const fetchDataToSimulation = writable<boolean>(false)
 
 export const setAppStatusLoading = (message?: string) => {
@@ -61,10 +61,10 @@ export const setAppStatusTrainingMode = (tv: TrainingValues, maxError: number) =
 }
 
 export const setIsvisibleSimulation = () => {
-	isVisbleSimulation.set(true)
+	isVisibleSimulation.set(true)
 }
 export const setSimulationValues = (sv: SimulationValues) => {
-	simultaionValues.set(sv)
+	simulationValues.set(sv)
 }
 
 export const setAppStatusSimulationUploadMode = () => {
