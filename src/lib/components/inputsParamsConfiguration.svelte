@@ -67,12 +67,14 @@
 			weight,
 			thresholds
 		)
-
+		
+		
 		if (values !== undefined) {
 			const sm: SimulationValues = {
 				weights: values.weights,
 				thresholds: values.thresholds
 			}
+			
 			setSimulationValues(sm)
 			setTimeout(() => {
 				setAppStatusTrainingMode(values, valueInputError!)

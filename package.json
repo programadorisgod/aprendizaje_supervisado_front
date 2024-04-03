@@ -42,6 +42,7 @@
 		"canvas-confetti": "^1.9.2",
 		"chart.js": "^4.4.2",
 		"d3": "^7.8.5",
+		"highcharts": "^11.4.0",
 		"svelte-chartjs": "^3.1.5",
 		"svelte-file-dropzone": "^2.0.4"
 	}

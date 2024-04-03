@@ -20,6 +20,9 @@ dependencies:
   d3:
     specifier: ^7.8.5
     version: 7.8.5
+  highcharts:
+    specifier: ^11.4.0
+    version: 11.4.0
   svelte-chartjs:
     specifier: ^3.1.5
     version: 3.1.5(chart.js@4.4.2)(svelte@4.2.12)
@@ -2035,6 +2038,10 @@ packages:
     dependencies:
       function-bind: 1.1.2
     dev: true
+
+  /highcharts@11.4.0:
+    resolution: {integrity: sha512-f5POJz2WdHW6SNT4P2CoMjsgcX5F5sJXtdfWLQCaNP9JG0nG5TSGG7+A6vzHGzcDkTPM72EQbRQofNZHaRTUPg==}
+    dev: false
 
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}

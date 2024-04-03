@@ -17,10 +17,10 @@
 	let YRs: string[] | number[] = []
 
 	const realOuputs = labels.map((label: number[]) => label[1])
-
+	
 	const p = labels.map((labels: string[]) => labels[0].join(' '))
 	const patrons = Array.from({ length: labels.length }, (_, index) => index)
-
+	
 	if (data[0]?.length > 1) {
 		expectOuputs = data.map((row) => row)
 		YDs = expectOuputs.map((row) => row.join(' '))
@@ -80,7 +80,6 @@
 		]
 	}
 
-	
 	const dataTable = patrons.map((patron, index) => {
 		return {
 			patron: p[index],

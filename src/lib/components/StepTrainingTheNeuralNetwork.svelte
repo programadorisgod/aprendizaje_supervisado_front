@@ -22,10 +22,10 @@
 			setFetchDataToSimulation()
 			setAppStatusSimulationUploadMode()
 			const body = {
-			  weights: $simulationValues.weights,
-			  thresholds: $simulationValues.thresholds
+				weights: $simulationValues.weights,
+				thresholds: $simulationValues.thresholds
 			}
-			fetchData("file", body)
+			fetchData('file', body)
 		}
 	}
 </script>

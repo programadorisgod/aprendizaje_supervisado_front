@@ -65,6 +65,7 @@ export const setIsvisibleSimulation = () => {
 }
 export const setSimulationValues = (sv: SimulationValues) => {
 	simulationValues.set(sv)
+	
 }
 
 export const setAppStatusSimulationUploadMode = () => {

@@ -10,7 +10,10 @@
 	import CanvasConfetti from 'canvas-confetti'
 
 	onMount(async () => {
-		const { weights: w, thresholds: u } = await fetchData('simulation')
+		const r = await fetchData('simulation')
+		
+		const w = r.weights
+		const u = r.thresholds
 
 		const simulations = await simulation(w, u)
 		simulationsStore.set(simulations)

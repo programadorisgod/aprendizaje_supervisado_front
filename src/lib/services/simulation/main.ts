@@ -9,10 +9,14 @@ export default async function simulation(
 	dataBase = await fetchData()
 
 	const w: number[][] = weights
+
 	const u: number[] = thresholds
 
 	const numPatterns = dataBase.length
+
 	const numEntries: number = dataBase[0][0].length // entradas
+	
+	
 	const numOutputs: number = dataBase[0][1].length
 
 	const yr: number[][] = []
