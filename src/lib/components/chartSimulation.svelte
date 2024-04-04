@@ -88,8 +88,8 @@
 	})
 </script>
 
-<div class="w-full min-h-96 bg-slate-50 mb-2">
-	<section>
+<div class="w-full h-full mb-2 items-center flex flex-col">
+	<section class="bg-white w-full">
 		<h3 class=" w-full text-center bg-white">Gráfica de la simulación</h3>
 		<Line data={dataChart} options={{ responsive: true }} />
 		<div class="bg-[#111827] mt-2">
@@ -111,7 +111,5 @@
 			</Table>
 		</div>
 	</section>
-	<div class="relative">
-		<EndOfTraining />
-	</div>
+	<EndOfTraining />
 </div>

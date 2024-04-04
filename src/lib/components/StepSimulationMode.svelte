@@ -11,7 +11,7 @@
 
 	onMount(async () => {
 		const r = await fetchData('simulation')
-		
+
 		const w = r.weights
 		const u = r.thresholds
 
@@ -23,7 +23,7 @@
 	})
 </script>
 
-<div class="w-[900px] h-[600px] flex flex-col justify-center items-center">
+<div class="w-full h-full flex flex-col justify-center items-center">
 	{#if isVisibleSimulation}
 		{#await Promise.all([$simulationsStore, $databaseStore])}
 			<p>Realizando simulación...</p>

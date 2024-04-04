@@ -2,12 +2,13 @@
 	import '../app.css'
 </script>
 
-
-<main class="h-full w-auto grid place-content-center overflow-x-hidden mb-2 mt-16">
-	<h1 class="text-6xl opacity-70 font-bold text-center pb-10 text-slate-50">
-		Aprendizaje Supervisado
-	</h1>
-	<section class="container w-full h-auto mx-auto pl-10 mt-9">
+<header>
+	<h1 class="text-6xl opacity-70 font-bold text-center text-slate-50">Aprendizaje Supervisado</h1>
+</header>
+<main class="h-full w-2/3 items-center mx-auto mt-14">
+	<section class="container mx-auto w-full h-full">
 		<slot />
 	</section>
 </main>
+
+<!-- grid place-content-center grid-cols-1 -->

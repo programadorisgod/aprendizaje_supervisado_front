@@ -4,7 +4,7 @@
 	import { type file } from '$lib/types/file'
 	import { APP_STATUS, appStatus, setAppStatusError, setAppStatusLoading } from '$lib/stores/stores'
 	import { fetchFile } from '$lib/utils/fetchFile'
-	
+
 	let files: file = {
 		accepted: [],
 		rejected: []
@@ -28,7 +28,7 @@
 	{#if $appStatus === APP_STATUS.INIT}
 		Arrastra y suelta aquí tu archivo
 	{:else}
-	  Arrastra y suelta aquí tu archivo, para empezar con la simulación
+		Arrastra y suelta aquí tu archivo, para empezar con la simulación
 	{/if}
 </Dropzone>
 
@@ -37,4 +37,3 @@
 		<li>{item.name}</li>
 	{/each}
 </ol>
-zz

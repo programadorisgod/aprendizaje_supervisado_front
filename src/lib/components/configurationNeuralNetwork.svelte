@@ -55,7 +55,7 @@
 	}
 </script>
 
-<section class="mt-12 text-white">
+<div class="w-full h-full text-white flex flex-col mt-2">
 	<div class="step flex flex-col">
 		<label>
 			<input
@@ -86,5 +86,7 @@
 		</label>
 	</div>
 
-	<InputsParamsConfiguration weight={weightArray} thresholds={thresholdsArray} />
-</section>
+	<div class="step fade_hidden w-full">
+		<InputsParamsConfiguration weight={weightArray} thresholds={thresholdsArray} />
+	</div>
+</div>

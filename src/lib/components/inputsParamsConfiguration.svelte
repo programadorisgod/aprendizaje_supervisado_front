@@ -51,7 +51,6 @@
 			invalidRat = false
 		}
 		if (valueInputError! < 0 || valueInputError! > 0.1) {
-
 			invalidError = true
 			return
 		} else {
@@ -67,14 +66,13 @@
 			weight,
 			thresholds
 		)
-		
-		
+
 		if (values !== undefined) {
 			const sm: SimulationValues = {
 				weights: values.weights,
 				thresholds: values.thresholds
 			}
-			
+
 			setSimulationValues(sm)
 			setTimeout(() => {
 				setAppStatusTrainingMode(values, valueInputError!)
@@ -83,7 +81,7 @@
 	}
 </script>
 
-<div class="step fade_hidden mt-1">
+
 	<form on:submit={handleOnSubmit} class="step flex flex-col justify-center">
 		<label for="iterations"> Numero de iteraciones </label>
 		<input
@@ -133,4 +131,3 @@
 			>Entrenar</button
 		>
 	</form>
-</div>
