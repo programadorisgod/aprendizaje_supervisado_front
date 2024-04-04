@@ -8,7 +8,7 @@
 		TableHeadCell
 	} from 'flowbite-svelte'
 	import { Line } from 'svelte-chartjs'
-	import EndOfTraining from './endOfTraining.svelte'
+	import EndOfTraining from './endOfSimulation.svelte'
 
 	export let labels: number[][]
 	export let data: number[][]

@@ -2,12 +2,11 @@
 	import { Alert } from 'flowbite-svelte'
 	import { appStatus } from '../lib/stores/stores'
 	import { APP_STATUS } from '../lib/stores/stores'
-	import StepUpload from '$components/StepUpload.svelte'
-	import StepLoading from '$components/StepLoading.svelte'
-	import StepModel from '$components/StepModel.svelte'
-	import StepTrainingTheNeuralNetwork from '$components/StepTrainingTheNeuralNetwork.svelte'
-	import StepUploadSimulation from '$components/StepUploadSimulation.svelte'
-	import StepSimulationMode from '$components/StepSimulationMode.svelte'
+	import StepUpload from '$components/shared/StepUpload.svelte'
+	import StepLoading from '$components/shared/StepLoading.svelte'
+	import StepModel from '$components/viewParamsInput/StepModel.svelte'
+	import StepTrainingTheNeuralNetwork from '$components/correctionOfErrors/trainingMode/StepTrainingTheNeuralNetwork.svelte'
+	import StepSimulationMode from '$components/correctionOfErrors/simulationMode/StepSimulationMode.svelte'
 </script>
 
 {#if $appStatus === APP_STATUS.INIT}
@@ -25,7 +24,7 @@
 {:else if $appStatus === APP_STATUS.TRAINING_MODE}
 	<StepTrainingTheNeuralNetwork />
 {:else if $appStatus === APP_STATUS.UPLOAD_SIMULATION_MODE}
-	<StepUploadSimulation />
+	<StepUpload />
 {:else if $appStatus === APP_STATUS.SIMULATION_MODE}
 	<StepSimulationMode />
 {:else}

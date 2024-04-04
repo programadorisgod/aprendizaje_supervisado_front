@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import fetchData from '$lib/utils/fetchData'
-	import StepLoading from './StepLoading.svelte'
-	import NeuralNetwork from './neuralNetwork.svelte'
-	import ConfigurationNeuralNetwork from './configurationNeuralNetwork.svelte'
+	import StepLoading from '../shared/StepLoading.svelte'
+	import NeuralNetwork from './charts/neuralNetwork.svelte'
+	import ConfigurationNeuralNetwork from '../correctionOfErrors/configurationNeuralNetwork/configurationNeuralNetwork.svelte'
 
 	let input_params: Array<Array<number>>
 

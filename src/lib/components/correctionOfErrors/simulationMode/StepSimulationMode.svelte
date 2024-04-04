@@ -1,8 +1,8 @@
 <script lang="ts">
 	import simulation from '$lib/services/simulation/main'
-	import { isVisibleSimulation, simulationValues } from '$lib/stores/stores'
+	import { isVisibleSimulation } from '$lib/stores/stores'
 	import { onMount } from 'svelte'
-	import ChartSimulation from './chartSimulation.svelte'
+	import ChartSimulation from './charts/chartSimulation.svelte'
 	import fetchData from '$lib/utils/fetchData'
 	import { writable } from 'svelte/store'
 	let simulationsStore = writable<number[][]>([])

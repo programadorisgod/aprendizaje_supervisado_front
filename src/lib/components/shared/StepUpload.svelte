@@ -24,11 +24,16 @@
 	}
 </script>
 
-<Dropzone on:drop={handleFilesSelect} multiple={false} accept=".csv, .txt, .xlsx">
+<Dropzone
+	containerStyles="height:10em; display: flex; align-items:center; justify-content:center; "
+	on:drop={handleFilesSelect}
+	multiple={false}
+	accept=".csv, .txt, .xlsx"
+>
 	{#if $appStatus === APP_STATUS.INIT}
-		Arrastra y suelta aquí tu archivo
+		<p class="text-slate-500">Arrastra y suelta aquí tu archivo</p>
 	{:else}
-		Arrastra y suelta aquí tu archivo, para empezar con la simulación
+		<p class="text-slate-500">Arrastra y suelta aquí tu archivo, para empezar con la simulación</p>
 	{/if}
 </Dropzone>
 
