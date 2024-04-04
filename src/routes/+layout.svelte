@@ -11,4 +11,3 @@
 	</section>
 </main>
 
-<!-- grid place-content-center grid-cols-1 -->

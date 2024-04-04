@@ -7,9 +7,12 @@
 	import StepModel from '$components/viewParamsInput/StepModel.svelte'
 	import StepTrainingTheNeuralNetwork from '$components/correctionOfErrors/trainingMode/StepTrainingTheNeuralNetwork.svelte'
 	import StepSimulationMode from '$components/correctionOfErrors/simulationMode/StepSimulationMode.svelte'
+	import InitMode from '$components/InitMode.svelte'
 </script>
 
 {#if $appStatus === APP_STATUS.INIT}
+	<InitMode />
+{:else if $appStatus === APP_STATUS.UPLOAD_FILE_TO_TRAIN}
 	<StepUpload />
 {:else if $appStatus === APP_STATUS.LOADING}
 	<StepLoading data={'Subiendo el archivo y extrayendo la información...'} />
