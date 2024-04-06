@@ -1,5 +1,5 @@
 <script lang="ts">
-	import supervisedLearningMain from '$lib/services/main'
+	import supervisedLearningMain from '$lib/services/correctionOfErrors/main'
 	import {
 		appStatus,
 		setAppStatusLoading,

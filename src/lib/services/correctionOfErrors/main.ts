@@ -1,7 +1,7 @@
 import { setAppStatusUnknowError } from '$lib/stores/stores'
 import fetchData from '$lib/utils/fetchData'
-import initialization from './initialization/initialization'
-import type { training } from './interface'
+import initialization from '../correctionOfErrors/initialization/initialization'
+import type { training } from '../correctionOfErrors/interface'
 
 export default async function supervisedLearningMain(
 	iterations: number,
@@ -16,7 +16,7 @@ export default async function supervisedLearningMain(
 		dataBase = await fetchData()
 	} catch (error) {
 		setAppStatusUnknowError()
-		return {weights:[[]], thresholds:[], iterationError:[], iterations:0}
+		return { weights: [[]], thresholds: [], iterationError: [], iterations: 0 }
 	}
 
 	const numEntries: number = dataBase[0][0].length // entradas

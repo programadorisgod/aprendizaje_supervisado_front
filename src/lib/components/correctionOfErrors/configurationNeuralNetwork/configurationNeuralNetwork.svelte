@@ -2,7 +2,7 @@
 	import { Select, type SelectOptionType } from 'flowbite-svelte'
 	import './configurationNeuralNetwork.css'
 	import InputsParamsConfiguration from './inputsParamsTraining.svelte'
-	import initWU from '$lib/services/init-w-u/init-w-u'
+	import initWU from '$lib/services/correctionOfErrors/init-w-u/init-w-u'
 
 	export let input_params: Array<Array<number>>
 	let isChecked = false

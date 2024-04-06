@@ -1,21 +1,21 @@
-import initWU from '../init-w-u/init-w-u'
-import type { neurone, training } from '../interface'
+import initWU from '../../correctionOfErrors/init-w-u/init-w-u'
+import type { neurone, training } from '../../correctionOfErrors/interface'
 
 export default function initialization(neuron: neurone): training {
-	let iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
+	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
 	let w: number[][] = neuron.weights // pesos
 	let u: number[] = neuron.thresholds // umbrales
 
 	while (neuron.maxError < iterationError.at(-1)! && iteration <= neuron.iterations) {
 		// mayor o igual al error?
-		let ep: number[] = [] // Error patron
+		const ep: number[] = [] // Error patron
 
 		// Por cada patron
 		for (let p = 0; p < neuron.numPatterns; p++) {
-			let s: number[] = [] // salidas de la red
-			let yr: number[] = [] // Salidas reales
-			let el: number[] = [] // Error lienal
+			const s: number[] = [] // salidas de la red
+			const yr: number[] = [] // Salidas reales
+			const el: number[] = [] // Error lienal
 			// Por cada salida y entrada
 			for (let i = 0; i <= neuron.numOutputs; i++) {
 				// Salidas de la red
@@ -71,7 +71,6 @@ export default function initialization(neuron: neurone): training {
 
 		iteration++
 	}
-
 
 	return {
 		iterations: iteration - 1,

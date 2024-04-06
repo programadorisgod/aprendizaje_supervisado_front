@@ -1,5 +1,5 @@
 <script lang="ts">
-	import simulation from '$lib/services/simulation/main'
+	import simulation from '$lib/services/correctionOfErrors/simulation/main'
 	import { isVisibleSimulation } from '$lib/stores/stores'
 	import { onMount } from 'svelte'
 	import ChartSimulation from './charts/chartSimulation.svelte'
