@@ -4,7 +4,12 @@
 	import './configurationNeuralNetworkBP.css'
 	import { fade } from 'svelte/transition'
 	import { FA } from '../CONsTANTS/functionsActivations'
+	import Button from '$components/shared/Button.svelte'
+	import Chart from './chart/Chart.svelte'
+	import { every } from 'd3'
+
 	export let input_params: number[][]
+
 	let numberOfLayersHiddens: SelectOptionType<any>[] = [
 		{
 			name: 1,
@@ -33,18 +38,28 @@
 	]
 
 	let selectedNumberOfLayersHiddens: number = 0
+	let selectedNumberOfLayersOutput: string = ''
 	let layers: number[]
 	let layerValues: number[] = [0, 0, 0]
 	let layersFA: string[] = ['', '', '', '']
-
+	let nextStep: Element | null | undefined
+	let error: boolean = false
+	let show: boolean = false
+	let showErrorInputLayer: boolean = false
 	$: {
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
 		if (selectedNumberOfLayersHiddens !== 0) {
 			const currentStep = document.querySelector('.step:not(fade_hidden)')
 
-			const nextStep = currentStep?.nextElementSibling
+			nextStep = currentStep?.nextElementSibling
 
 			nextStep?.classList.remove('fade_hidden')
+		}
+
+		if (selectedNumberOfLayersOutput !== '' && layerValues.every((value) => value < 100)) {
+			const nextSetpFinal = nextStep?.nextElementSibling
+
+			nextSetpFinal?.classList.remove('fade_hidden')
 		}
 	}
 
@@ -59,6 +74,37 @@
 		} else {
 			layersFA[3] = target.value
 		}
+	}
+	const handleClick = () => {
+		if (layerValues[0] < input_params[0][0]) {
+			showErrorInputLayer = true
+		}
+		if (layerValues[0] === 0 && layers.length === 1) {
+			error = true
+			return
+		} else {
+			error = false
+		}
+
+		if (layerValues[0] === 0 && layerValues[1] === 0 && layers.length === 2) {
+			error = true
+			return
+		} else {
+			error = false
+		}
+
+		if (
+			layerValues[0] === 0 &&
+			layerValues[1] === 0 &&
+			layerValues[2] === 0 &&
+			layerValues.length === 3
+		) {
+			error = true
+			return
+		} else {
+			error = false
+		}
+		show = true
 	}
 </script>
 
@@ -102,9 +148,27 @@
 			Seleccione la funcion de activación para la <strong>capa de salida</strong>
 			<Select
 				class="w-36 h-10"
-				items={functionOfActivationLayerHiden}
+				items={functionOfActivationLayerOutput}
 				on:input={(event) => handledSelectChange(event)}
+				bind:value={selectedNumberOfLayersOutput}
 			></Select>
 		</label>
+
+		{#if showErrorInputLayer}
+			<p class="text-red-600">
+				El numero de neuronas de la capa 1, no puede ser menor al nuemero de entradas
+			</p>
+		{/if}
+		{#if error}
+			{error}
+			<p class="text-red-600">Por llene todo los campos</p>
+		{/if}
 	</div>
+	<div class="step fade_hidden mt-3">
+		<Button on:click={handleClick} message="Mostrar topología"></Button>
+	</div>
+
+	{#if layerValues.every((value) => value < 100) && show && showErrorInputLayer === false}
+		<Chart inputs={input_params[0][0]} {layers} {layerValues} layerOutput={input_params[0][1]} />
+	{/if}
 </article>
