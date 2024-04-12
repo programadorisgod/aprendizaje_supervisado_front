@@ -1,7 +1,7 @@
-import initWU from '../../correctionOfErrors/init-w-u/init-w-u'
-import type { neurone, training } from '../../correctionOfErrors/interface'
+import initWU from '../init-w-u/init-w-u'
+import type { neurone, training } from '../interface'
 
-export default function initialization(neuron: neurone): training {
+export default function trainingFunction(neuron: neurone): training {
 	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
 	let w: number[][] = neuron.weights // pesos

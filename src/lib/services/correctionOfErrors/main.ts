@@ -1,6 +1,6 @@
 import { setAppStatusUnknowError } from '$lib/stores/stores'
 import fetchData from '$lib/utils/fetchData'
-import initialization from '../correctionOfErrors/initialization/initialization'
+import trainingFunction from './training/training'
 import type { training } from '../correctionOfErrors/interface'
 
 export default async function supervisedLearningMain(
@@ -24,7 +24,7 @@ export default async function supervisedLearningMain(
 	const numPatterns: number = dataBase.length // patrones
 
 	// llamada a funcion de entrenamiento
-	return initialization({
+	return trainingFunction({
 		iterations,
 		learningRat,
 		maxError,
