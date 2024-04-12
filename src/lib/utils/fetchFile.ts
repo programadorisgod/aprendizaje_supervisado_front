@@ -14,7 +14,7 @@ export const fetchFile = async (file: File): Promise<void> => {
 	formData.append('file', file)
 
 	try {
-		const res = await fetch(`${VITE_BASE_URL}/upload-file`, {
+		const res = await fetch(`${VITE_BASE_URL}/error-correction/upload-file`, {
 			method: 'POST',
 			body: formData
 		})

@@ -7,7 +7,6 @@
 		BACKPROPAGATION: 'Backpropagation Multicapa'
 	}
 	const handleClick = (event: CustomEvent): void => {
-		console.log(event);
 		
 		const target = event.detail.target as HTMLElement
 		const text = target.outerText

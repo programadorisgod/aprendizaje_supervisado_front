@@ -44,7 +44,6 @@
 			.attr('height', height)
 			.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`)
-		console.log(layersNeural)
 
 		layersNeural.forEach((layer, i) => {
 			const x = i * layerWidth + layerWidth / 2

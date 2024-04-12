@@ -5,8 +5,8 @@
 	import StepUpload from '$components/shared/StepUpload.svelte'
 	import StepLoading from '$components/shared/StepLoading.svelte'
 	import StepModel from '$components/viewParamsInput/StepModel.svelte'
-	import StepTrainingTheNeuralNetwork from '$components/correctionOfErrors/trainingMode/StepTrainingTheNeuralNetwork.svelte'
-	import StepSimulationMode from '$components/correctionOfErrors/simulationMode/StepSimulationMode.svelte'
+	import StepTrainingTheNeuralNetwork from '$components/errorCorrection/trainingMode/StepTrainingTheNeuralNetwork.svelte'
+	import StepSimulationMode from '$components/errorCorrection/simulationMode/StepSimulationMode.svelte'
 	import InitMode from '$components/InitMode.svelte'
 </script>
 

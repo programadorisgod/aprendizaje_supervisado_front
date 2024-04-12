@@ -5,7 +5,9 @@ export default async function fetchData(params?: string, body?: SimulationValues
 	const { VITE_BASE_URL } = import.meta.env
 
 	try {
-		const uri = params ? `${VITE_BASE_URL}/${params}` : VITE_BASE_URL
+		const uri = params
+			? `${VITE_BASE_URL}/error-correction/${params}`
+			: `${VITE_BASE_URL}/error-correction`
 		const res = await fetch(uri, {
 			method: body ? 'POST' : 'GET',
 			headers: {
