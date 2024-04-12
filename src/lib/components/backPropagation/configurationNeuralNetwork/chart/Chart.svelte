@@ -37,7 +37,6 @@
 		const width = layersNeural.length * layerWidth + margin.left + margin.right
 		const height = layerHeight + margin.top + margin.bottom
 
-		const innerWidth = width - margin.left - margin.right
 		const innerHeight = height - margin.top - margin.bottom
 
 		svg = select('#neural-network')
@@ -48,12 +47,16 @@
 		console.log(layersNeural)
 
 		layersNeural.forEach((layer, i) => {
-			console.log(layer)
-
 			const x = i * layerWidth + layerWidth / 2
 			const ySpacing = innerHeight / (layer.neurons + 1)
 
-			svg.append('text').attr('x', x).attr('y', 10).attr('text-anchor', 'middle').text(layer.name).attr('fill', 'white')
+			svg
+				.append('text')
+				.attr('x', x)
+				.attr('y', 10)
+				.attr('text-anchor', 'middle')
+				.text(layer.name)
+				.attr('fill', 'white')
 
 			for (let j = 0; j < layer.neurons; j++) {
 				const y = (j + 1) * ySpacing

@@ -1,15 +1,10 @@
 <script lang="ts">
-	import supervisedLearningMain from '$lib/services/correctionOfErrors/main'
-	import {
-		setAppStatusLoading,
-		setAppStatusTrainingMode,
-		setSimulationValues
-	} from '$lib/stores/stores'
-	import type { SimulationValues } from '$lib/types/simulationValues'
+	import { setAppStatusLoading } from '$lib/stores/stores'
 	import showError from '$lib/utils/valitadeInputs'
 	import { Alert } from 'flowbite-svelte'
+	/* 
 	export let weight: number[][]
-	export let thresholds: number[]
+	export let thresholds: number[] */
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -57,26 +52,6 @@
 		}
 
 		setAppStatusLoading('Entrenando...')
-
-		const values = await supervisedLearningMain(
-			valueInputIterations!,
-			valueInputRat!,
-			valueInputError!,
-			weight,
-			thresholds
-		)
-
-		if (values !== undefined) {
-			const sm: SimulationValues = {
-				weights: values.weights,
-				thresholds: values.thresholds
-			}
-
-			setSimulationValues(sm)
-			setTimeout(() => {
-				setAppStatusTrainingMode(values, valueInputError!)
-			}, 2000)
-		}
 	}
 </script>
 
