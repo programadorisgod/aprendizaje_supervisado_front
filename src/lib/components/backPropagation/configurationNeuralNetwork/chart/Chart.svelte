@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { select, type Selection } from 'd3'
-	import { onMount } from 'svelte'
+	import { afterUpdate, onMount } from 'svelte'
 
+	let previousLayerValues: Array<number> = []
 	onMount(() => {
 		drawNeuralNetwork()
+		previousLayerValues = [...layerValues]
 	})
 
 	let svg: Selection<SVGGElement, unknown, HTMLElement, any>
@@ -12,6 +14,24 @@
 	export let layers: Array<number>
 	export let layerValues: Array<number>
 	export let layerOutput: number
+
+	let redraw: boolean = false
+
+	afterUpdate(() => {
+		const layerValuesChanged = layerValues.some(
+			(value, index) => value !== previousLayerValues[index]
+		)
+
+		if (layerValuesChanged) {
+			redraw = true
+		}
+	})
+
+	$: if (redraw) {
+		svg.selectAll('*').remove()
+		drawNeuralNetwork()
+		redraw = false
+	}
 
 	function drawNeuralNetwork() {
 		/* let layers: */

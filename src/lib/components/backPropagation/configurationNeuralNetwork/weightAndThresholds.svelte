@@ -13,10 +13,10 @@
 	})
 </script>
 
-<div class="mt-2">
-	<h2><strong>Pesos</strong></h2>
+<div class="mt-2 flex gap-4">
 	{#if data != null}
 		<div class="matrix-container">
+			<h2><strong>Pesos</strong></h2>
 			{#each data.pesos as layer, index}
 				<div class="layer">
 					<h3><strong>Capa {index + 1}</strong></h3>
@@ -34,17 +34,19 @@
 				</div>
 			{/each}
 		</div>
-		<h2><strong>Umbrales</strong></h2>
-		{#each data.umbrales as array, index}
-			<div class="array">
-				<h3><strong>Capa {index + 1}</strong></h3>
-				<div class="row">
-					{#each array as value}
-						<span class="value">{value}</span>
-					{/each}
+		<div class="flex flex-col">
+			<h2><strong>Umbrales</strong></h2>
+			{#each data.umbrales as array, index}
+				<div class="array">
+					<h3><strong>Capa {index + 1}</strong></h3>
+					<div class="row">
+						{#each array as value}
+							<span class="value">{value}</span>
+						{/each}
+					</div>
 				</div>
-			</div>
-		{/each}
+			{/each}
+		</div>
 	{/if}
 </div>
 
@@ -66,6 +68,8 @@
 	.layer,
 	.array {
 		margin-bottom: 1rem;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.matrix-column {
