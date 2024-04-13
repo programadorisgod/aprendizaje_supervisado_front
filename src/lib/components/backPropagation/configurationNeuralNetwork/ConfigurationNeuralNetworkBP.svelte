@@ -10,7 +10,8 @@
 		functionOfActivationLayerOutput,
 		numberOfLayersHiddens
 	} from '../CONsTANTS/selectOptions'
-	import InputsParams from './inputsParams.svelte'
+	import InputsParams from './InputsParams.svelte'
+	import WeightAndThresholds from './weightAndThresholds.svelte'
 
 	export let input_params: number[][]
 
@@ -27,6 +28,7 @@
 	let show: boolean = false
 	let showErrorInputLayer: boolean = false
 	let isVisible = false
+	let isChecked: boolean = false
 
 	$: {
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
@@ -45,7 +47,10 @@
 			isVisible = true
 		}
 
-		if (show || (!show && selectedAlogrithms && !isVisible)) {
+		if (
+			(show && !showErrorInputLayer) ||
+			(!show && selectedAlogrithms && !isVisible && !showErrorInputLayer)
+		) {
 			if (nextStep2) {
 				stepFinal = nextStep2.nextElementSibling
 			} else {
@@ -67,10 +72,16 @@
 			layersFA[3] = target.value
 		}
 	}
+	const handleChange = (event: Event) => {
+		const target = event.target as HTMLInputElement
+		if (target.checked) target.disabled = true
+	}
 
 	const handleClick = () => {
 		if (layerValues[0] < input_params[0][0]) {
 			showErrorInputLayer = true
+		} else {
+			showErrorInputLayer = false
 		}
 
 		if (layerValues[0] === 0 && layers.length === 1) {
@@ -107,7 +118,7 @@
 	}
 </script>
 
-<article class="w-auto h-full mt-5 text-white flex flex-col">
+<article class="w-full h-full mt-5 text-white flex flex-col">
 	<div class="step">
 		<label for="">
 			Seleccione el número de capas ocultas:
@@ -122,7 +133,7 @@
 	<div class="step fade_hidden flex flex-col gap-2">
 		<hr class="mt-3" />
 		{#each layers as layer, index (layer)}
-			<div class="flex gap-6 mt-2 justify-center items-center">
+			<div class="flex gap-6 mt-2">
 				<label transition:fade for="" class="flex flex-col">
 					Numero de neuronas de la <strong>capa {layer}</strong>
 					<input
@@ -177,6 +188,20 @@
 		<Chart inputs={input_params[0][0]} {layers} {layerValues} layerOutput={input_params[0][1]} />
 	{/if}
 	<div class="step fade_hidden mt-3 inputs_params">
-		<InputsParams />
+		<label>
+			<input
+				bind:checked={isChecked}
+				on:change={(event) => handleChange(event)}
+				class="appearance-none w-4 h-4 rounded-lg"
+				type="checkbox"
+			/>
+			Inicializar pesos y umbrales
+		</label>
 	</div>
+
+	{#if isChecked}
+		<WeightAndThresholds {layerValues} />
+
+		<InputsParams {layerValues} layerOutput={input_params[0][1]} {layersFA} />
+	{/if}
 </article>

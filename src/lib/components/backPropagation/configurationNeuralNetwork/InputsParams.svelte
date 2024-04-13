@@ -2,9 +2,11 @@
 	import { setAppStatusLoading } from '$lib/stores/stores'
 	import showError from '$lib/utils/valitadeInputs'
 	import { Alert } from 'flowbite-svelte'
-	/* 
-	export let weight: number[][]
-	export let thresholds: number[] */
+	import WeightAndThresholds from './weightAndThresholds.svelte'
+
+	export let layerValues: number[] = []
+	export let layerOutput: number = 0
+	export let layersFA: Array<string> = ['']
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -50,8 +52,18 @@
 		} else {
 			invalidError = false
 		}
+		const networkLayers = []
 
-		setAppStatusLoading('Entrenando...')
+		layerValues.forEach((neuron, index) => {
+			if (neuron != 0) {
+				networkLayers.push({
+					neurons: neuron,
+					activationFunction: layersFA[index]
+				})
+			}
+		})
+
+		networkLayers.push({ neurons: layerOutput, activationFunction: layersFA[layersFA.length - 1] })
 	}
 </script>
 
@@ -100,6 +112,7 @@
 			Por favor, no deje parametros sin inicializar
 		</Alert>
 	{/if}
+
 	<button class="text-center bg-blue-500 text-white font-bold w-36 h-10 rounded-md mt-3 mb-4"
 		>Entrenar</button
 	>
