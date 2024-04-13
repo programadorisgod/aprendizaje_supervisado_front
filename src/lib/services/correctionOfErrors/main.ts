@@ -1,7 +1,7 @@
 import { setAppStatusUnknowError } from '$lib/stores/stores'
 import fetchData from '$lib/utils/fetchData'
 import trainingFunction from './training/training'
-import type { training } from '../correctionOfErrors/interface'
+import type { training } from './interface'
 
 export default async function supervisedLearningMain(
 	iterations: number,

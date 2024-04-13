@@ -8,7 +8,6 @@ export default function trainingFunction(neuron: neurone): training {
 	let u: number[] = neuron.thresholds // umbrales
 
 	while (neuron.maxError < iterationError.at(-1)! && iteration <= neuron.iterations) {
-		// mayor o igual al error?
 		const ep: number[] = [] // Error patron
 
 		// Por cada patron
