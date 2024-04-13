@@ -29,6 +29,7 @@
 	let showErrorInputLayer: boolean = false
 	let isVisible = false
 	let isChecked: boolean = false
+	let data: { pesos: [][][]; umbrales: [][] }
 
 	$: {
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
@@ -59,7 +60,9 @@
 			stepFinal?.classList.remove('fade_hidden')
 		}
 	}
-
+	const handleMessage = (event: CustomEvent) => {
+		data = event.detail
+	}
 	const handleInputChange = (event: Event, index: number) => {
 		const target = event.target as HTMLInputElement
 		layerValues[index] = Number(target.value)
@@ -200,8 +203,8 @@
 	</div>
 
 	{#if isChecked}
-		<WeightAndThresholds {layerValues} />
+		<WeightAndThresholds on:message={handleMessage} {layerValues} />
 
-		<InputsParams {layerValues} layerOutput={input_params[0][1]} {layersFA} />
+		<InputsParams {data} {layerValues} layerOutput={input_params[0][1]} {layersFA} />
 	{/if}
 </article>

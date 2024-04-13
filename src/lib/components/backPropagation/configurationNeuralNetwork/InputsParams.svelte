@@ -1,12 +1,13 @@
 <script lang="ts">
+	import backPropagationMain from '$lib/services/backPropagation/main'
 	import { setAppStatusLoading } from '$lib/stores/stores'
 	import showError from '$lib/utils/valitadeInputs'
 	import { Alert } from 'flowbite-svelte'
-	import WeightAndThresholds from './weightAndThresholds.svelte'
 
 	export let layerValues: number[] = []
 	export let layerOutput: number = 0
 	export let layersFA: Array<string> = ['']
+	export let data: { pesos: [][][]; umbrales: [][] }
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -64,6 +65,16 @@
 		})
 
 		networkLayers.push({ neurons: layerOutput, activationFunction: layersFA[layersFA.length - 1] })
+
+		setAppStatusLoading('Entrenando...')
+		await backPropagationMain(
+			valueInputIterations!,
+			valueInputRat!,
+			valueInputError!,
+			data.pesos,
+			data.umbrales,
+			networkLayers
+		)
 	}
 </script>
 

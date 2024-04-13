@@ -3,11 +3,13 @@
 
 	import customFetch from '$lib/utils/fecthBackPropagation'
 
-	import { onMount } from 'svelte'
+	import { createEventDispatcher, onMount } from 'svelte'
 	export let layerValues = []
 	let data = null
+	const distPatch = createEventDispatcher()
 	onMount(async () => {
 		data = await customFetch(layerValues)
+		distPatch('message', data)
 	})
 </script>
 
