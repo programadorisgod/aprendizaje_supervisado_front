@@ -117,6 +117,7 @@
 		} else {
 			error = false
 		}
+
 		show = true
 	}
 </script>
