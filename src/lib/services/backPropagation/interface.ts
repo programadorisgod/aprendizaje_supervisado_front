@@ -18,9 +18,9 @@ export interface networkLayer {
 
 export interface training {
 	iterations: number
-	weights: number[][]
-	thresholds: number[]
 	iterationError: number[]
+	weights: number[][][]
+	thresholds: number[][]
 }
 
 export interface layerManagement {
