@@ -11,7 +11,6 @@
 
 	onMount(async () => {
 		const r = await fetchData('simulation')
-
 		const w = r.weights
 		const u = r.thresholds
 
