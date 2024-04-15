@@ -24,7 +24,8 @@ export default async function backPropagationMain(
 	const numOutputs: number = dataBase[0][1].length // salidas
 	const numPatterns: number = dataBase.length // patrones
 
-	console.log(dataBase, weights, thresholds, layers)
+	console.log(dataBase, weights.slice(), thresholds.slice(), layers)
+	// return { iterations: 0, iterationError: [], weights: [[[]]], thresholds: [[]] }
 
 	// llamada a funcion de entrenamiento
 	return trainingFunction({

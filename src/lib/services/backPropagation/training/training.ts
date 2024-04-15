@@ -19,12 +19,13 @@ export default function trainingFunction(net: network): training {
 
 		// Por cada patron
 		for (let p = 0; p < net.numPatterns; p++) {
-			// Salidas de las capas ocultas
-			const h: number[][] = aux.indexes.map((v) => new Array(v).fill(0))
 			// Errores
 			const e: number[][] = net.layers.map((v) => new Array(v.neurons).fill(0))
+			// Salidas y salidas de las capas ocultas
+			const h: number[][] = e
+			h.unshift(net.dataBase[p][0])
 			// Derivadas (todas, asi que capa-salida = 1)
-			const der: number[][] = h
+			const der: number[][] = e
 
 			// Por cada capa
 			for (let c = 0; c < net.layers.length; c++) {
@@ -32,11 +33,11 @@ export default function trainingFunction(net: network): training {
 				for (let i = 0; i < aux.indexes[aux.current + 1]; i++) {
 					// por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						h[c][i] += net.dataBase[p][0][j] * w[c][j][i]
+						h[c + 1][i] += h[c][i] * w[c][i][j]
 					}
 
 					// Restar el umbral
-					h[c][i] -= u[c][i]
+					h[c + 1][i] -= u[c][i]
 					// funcion de activacion
 					let fa = 0
 					// funcion de activacion derivada
@@ -45,16 +46,16 @@ export default function trainingFunction(net: network): training {
 					// Funciones de activacion
 					switch (net.layers[c].activationFunction) {
 						case 'TH':
-							fa = tanh(h[c][i])
-							derFa = derivativeTanh(h[c][i])
+							fa = tanh(h[c + 1][i])
+							derFa = derivativeTanh(h[c + 1][i])
 							break
 						case 'SG':
-							fa = sigmoid(h[c][i])
-							derFa = derivativeSigmoid(h[c][i])
+							fa = sigmoid(h[c + 1][i])
+							derFa = derivativeSigmoid(h[c + 1][i])
 							break
 						case 'SENO':
-							fa = sin(h[c][i])
-							derFa = derivativeSin(h[c][i])
+							fa = sin(h[c + 1][i])
+							derFa = derivativeSin(h[c + 1][i])
 							break
 
 						default:
@@ -64,17 +65,16 @@ export default function trainingFunction(net: network): training {
 					}
 
 					// h sub i es igual a fa(suma - u)
-					h[c][i] = fa
+					h[c + 1][i] = fa
 
 					// Derivada y por si es la capa de salida
 					der[c][i] = c != net.layers.length - 1 ? derFa : 1
-
-					// Error lineal capa salida
-					for (let k = 0; k < net.numOutputs; k++) {
-						e[e.length - 1][k] = net.dataBase[p][1][k] - h[h.length - 1][k]
-					}
 				}
 				aux.current++
+			}
+			// Error lineal capa salida
+			for (let k = 0; k < net.numOutputs; k++) {
+				e[e.length - 1][k] = net.dataBase[p][1][k] - h[h.length - 1][k]
 			}
 
 			// Por cada capa desde la ultima capa oculta (sin la de salida)
@@ -83,7 +83,7 @@ export default function trainingFunction(net: network): training {
 				for (let i = 0; i < aux.indexes[aux.current - 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						e[c][i] += e[c + 1][j] * w[c][i][j]
+						e[c][i] += e[c + 1][j] * w[c][j][i]
 					}
 				}
 				aux.current--
@@ -95,9 +95,6 @@ export default function trainingFunction(net: network): training {
 			}
 			ep[p] = ep[p] / net.numOutputs
 
-			// entradas y h (X y h)
-			const hx = [net.dataBase[p][0], ...h]
-
 			// Actualizar pesos/umbrales
 			// Por cada capa
 			for (let c = 0; c < net.layers.length; c++) {
@@ -105,12 +102,13 @@ export default function trainingFunction(net: network): training {
 				for (let i = 0; i < aux.indexes[aux.current + 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						w[c][j][i] = w[c][j][i] + 2 * net.learningRat * e[c][i] * der[c][i] * hx[c][j]
+						w[c][j][i] = w[c][j][i] + 2 * net.learningRat * e[c][i] * der[c][i] * h[c][j]
 					}
 					u[c][i] = u[c][i] + 2 * net.learningRat * e[c][i] * der[c][i] * 1
 				}
 				aux.current++
 			}
+			console.log(h, e, der)
 		}
 
 		// Error por iteracion
@@ -125,6 +123,8 @@ export default function trainingFunction(net: network): training {
 		aux.current = 0
 		iteration++
 	}
+
+	console.log(iterationError, w, u)
 
 	return {
 		iterations: iteration - 1,
