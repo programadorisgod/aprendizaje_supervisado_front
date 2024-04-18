@@ -1,13 +1,22 @@
 <script lang="ts">
+	import type { training } from '$lib/services/backPropagation/interface'
 	import backPropagationMain from '$lib/services/backPropagation/main'
-	import { setAppStatusLoading } from '$lib/stores/stores'
+	import { setAppStatusLoading, setAppStatusTrainingModeBP } from '$lib/stores/stores'
 	import showError from '$lib/utils/valitadeInputs'
 	import { Alert } from 'flowbite-svelte'
+	import {
+		setFA,
+		setIterationsError,
+		setLayerValues,
+		setMaxError,
+		setNumberOfLayersHiddens
+	} from '../stores/storesConfiguration'
 
 	export let layerValues: number[] = []
 	export let layerOutput: number = 0
 	export let layersFA: Array<string> = ['']
 	export let data: { pesos: [][][]; umbrales: [][] }
+	export let numberOfLayersHiddens: number
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -66,8 +75,12 @@
 
 		networkLayers.push({ neurons: layerOutput, activationFunction: layersFA[layersFA.length - 1] })
 
+		setNumberOfLayersHiddens(numberOfLayersHiddens)
+		setFA(layersFA)
+		setLayerValues(layerValues)
+
 		setAppStatusLoading('Entrenando...')
-		await backPropagationMain(
+		const values: training = await backPropagationMain(
 			valueInputIterations!,
 			valueInputRat!,
 			valueInputError!,
@@ -75,6 +88,9 @@
 			data.umbrales,
 			networkLayers
 		)
+		setMaxError(valueInputError!)
+		setIterationsError(values.iterationError[values.iterationError.length - 1])
+		setAppStatusTrainingModeBP()
 	}
 </script>
 

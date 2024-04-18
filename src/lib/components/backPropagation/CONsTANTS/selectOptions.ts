@@ -29,5 +29,6 @@ export const functionOfActivationLayerOutput: SelectOptionType<unknown>[] = [
 ]
 
 export const algorithmTraining: SelectOptionType<unknown>[] = [
-	{ name: 'BackPropagation', value: 'BP' }
+	{ name: 'BackPropagation', value: 'BP' },
+	{ name: 'BackPropagation Cascada', value: 'BPC' }
 ]

@@ -5,7 +5,7 @@
 	import NeuralNetwork from './charts/neuralNetwork.svelte'
 	import ConfigurationNeuralNetwork from '../errorCorrection/configurationNeuralNetwork/configurationNeuralNetwork.svelte'
 	import { modelBackPropagation } from '$lib/stores/stores'
-	import ConfigurationNeuralNetworkBp from '$components/backPropagation/configurationNeuralNetwork/ConfigurationNeuralNetworkBP.svelte'
+	import ConfigurationNeuralNetworkBp from '$components/backPropagation/configurationNeuralNetwork/training/ConfigurationNeuralNetworkBP.svelte'
 
 	let input_params: Array<Array<number>>
 

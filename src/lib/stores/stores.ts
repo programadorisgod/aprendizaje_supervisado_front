@@ -10,6 +10,7 @@ export const APP_STATUS = {
 	UPLOAD_SIMULATION_MODE: 4,
 	SIMULATION_MODE: 5,
 	UPLOAD_FILE_TO_TRAIN: 6,
+	TRAINING_MODE_BP: 7,
 	ERROR: -1
 }
 export const tv: TrainingValues = {
@@ -87,4 +88,7 @@ export const setAppStatusUnknowError = () => {
 
 export const setFetchDataToSimulation = () => {
 	fetchDataToSimulation.set(true)
+}
+export const setAppStatusTrainingModeBP = () => {
+	appStatus.set(7)
 }

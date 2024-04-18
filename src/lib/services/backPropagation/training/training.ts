@@ -1,9 +1,11 @@
+import { valuesIteration } from '$components/backPropagation/configurationNeuralNetwork/stores/storesConfiguration'
 import { derivativeSin, sin } from '../activationFunctions/seno'
 import { derivativeSigmoid, sigmoid } from '../activationFunctions/sigmoid'
 import { derivativeTanh, tanh } from '../activationFunctions/tanh'
 import type { layerManagement, network, training } from './../interface'
 
 export default function trainingFunction(net: network): training {
+
 	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
 	const w: number[][][] = net.weights // pesos
@@ -114,9 +116,17 @@ export default function trainingFunction(net: network): training {
 		}
 		iterationError[iteration] /= net.numPatterns
 
+		console.log(iterationError[iteration])
+		console.log(iterationError)
+
+		valuesIteration.set({
+			error: iterationError[iteration],
+			iterationValue: iteration - 1
+		})
 		// Siguiente ciclo
 		aux.current = 0
 		iteration++
+		console.log(iteration)
 	}
 
 	console.log(iterationError, w, u)

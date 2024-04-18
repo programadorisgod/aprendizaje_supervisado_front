@@ -9,14 +9,20 @@
 		functionOfActivationLayerHiden,
 		functionOfActivationLayerOutput,
 		numberOfLayersHiddens
-	} from '../CONsTANTS/selectOptions'
+	} from '../../CONsTANTS/selectOptions'
 	import InputsParams from './InputsParams.svelte'
-	import WeightAndThresholds from './weightAndThresholds.svelte'
+	import WeightAndThresholds from './WeightAndThresholds.svelte'
+	import {
+		storeFA,
+		storeLayerValues,
+		storeNumberOfLayersHiddens,
+		trainingFailed
+	} from '../stores/storesConfiguration'
+	import { onMount } from 'svelte'
 
 	export let input_params: number[][]
-
 	let selectedNumberOfLayersHiddens: number = 0
-	let selectedNumberOfLayersOutput: string = ''
+	let selectedFAOfLayersOutput: string = ''
 	let selectedAlogrithms: string = ''
 	let layers: number[]
 	let layerValues: number[] = [0, 0, 0]
@@ -31,8 +37,18 @@
 	let isChecked: boolean = false
 	let data: { pesos: [][][]; umbrales: [][] }
 
+	onMount(() => {
+		if ($trainingFailed) {
+			selectedNumberOfLayersHiddens = $storeNumberOfLayersHiddens
+			layersFA = $storeFA
+			selectedFAOfLayersOutput = $storeFA[$storeFA.length - 1]
+			layerValues = $storeLayerValues
+		}
+	})
+
 	$: {
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
+
 		if (selectedNumberOfLayersHiddens !== 0) {
 			const currentStep = document.querySelector('.step:not(fade_hidden)')
 
@@ -41,7 +57,7 @@
 			nextStep?.classList.remove('fade_hidden')
 		}
 
-		if (selectedNumberOfLayersOutput !== '' && layerValues.every((value) => value < 100)) {
+		if (selectedFAOfLayersOutput !== '' && layerValues.every((value) => value < 100)) {
 			nextStep2 = nextStep?.nextElementSibling
 
 			nextStep2?.classList.remove('fade_hidden')
@@ -145,12 +161,14 @@
 						type="number"
 						min={layer === 1 ? input_params[0][0] : 1}
 						on:input={(event) => handleInputChange(event, index)}
+						bind:value={layerValues[index]}
 					/>
 				</label>
 				<label for="" class="flex flex-col">
 					Seleccione la funcion de activación para la <strong>capa {layer}</strong>
 					<Select
 						class="mt-2 w-36 h-10"
+						bind:value={$storeFA[index]}
 						items={functionOfActivationLayerHiden}
 						on:input={(event) => handledSelectChange(event, index)}
 					></Select>
@@ -164,7 +182,7 @@
 				class="w-36 h-10"
 				items={functionOfActivationLayerOutput}
 				on:input={(event) => handledSelectChange(event)}
-				bind:value={selectedNumberOfLayersOutput}
+				bind:value={selectedFAOfLayersOutput}
 			></Select>
 		</label>
 
@@ -206,6 +224,12 @@
 	{#if isChecked}
 		<WeightAndThresholds on:message={handleMessage} {layerValues} />
 
-		<InputsParams {data} {layerValues} layerOutput={input_params[0][1]} {layersFA} />
+		<InputsParams
+			{data}
+			{layerValues}
+			layerOutput={input_params[0][1]}
+			{layersFA}
+			numberOfLayersHiddens={selectedNumberOfLayersHiddens}
+		/>
 	{/if}
 </article>
