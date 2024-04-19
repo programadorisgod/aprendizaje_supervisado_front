@@ -1,13 +1,17 @@
 <script lang="ts">
 	import Chart from 'chart.js/auto'
-	import { onMount } from 'svelte'
-	import { valuesIteration } from '../../stores/storesConfiguration'
+	import { createEventDispatcher, onMount } from 'svelte'
+	import {  setValuesTraining, trainingFailed, valuesIterationTraining } from '../../stores/storesConfiguration'
+	const dispatch = createEventDispatcher()
+
+	const handleBoolean = () => {
+		dispatch('finish', {
+			isVisible: true
+		})
+	}
 
 	let container: HTMLCanvasElement | null
 	let chart: Chart | null = null
-	let chartData: number[] = []
-	let chartLabels: number[] = []
-
 	onMount(() => {
 		container = document.getElementById('container') as HTMLCanvasElement
 		chart = new Chart(container, {
@@ -26,19 +30,25 @@
 			}
 		})
 	})
-	valuesIteration.subscribe((value) => {
-		console.log('Valor', value)
 
-		if (chart && chart.data && chart.data.labels && chart.data.datasets && chart.data.datasets[0]) {
-			console.log('entro a la grafica')
+ 
+	let i = 0
+	let time = 3000 / $valuesIterationTraining.iterations
+	if (time <= 0) {
+		time = 10
+	}
 
-			chart.data.labels.push(value.error)
-			chart.data.datasets[0].data.push(value.iterationValue)
-			console.log(chart.data.labels)
-       
-			chart.update()
+	const intervalId = setInterval(() => {
+		if (i < $valuesIterationTraining.iterations) {
+			chart?.data.labels?.push(i),
+				chart?.data.datasets[0].data.push($valuesIterationTraining.error[i])
+			chart?.update()
+			i++
+		} else {
+     handleBoolean()
+			clearInterval(intervalId)
 		}
-	})
+	}, time)
 </script>
 
 <canvas id="container" class="w-full min-h-96 bg-slate-50"></canvas>

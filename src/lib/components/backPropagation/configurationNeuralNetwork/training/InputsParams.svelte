@@ -9,14 +9,21 @@
 		setIterationsError,
 		setLayerValues,
 		setMaxError,
-		setNumberOfLayersHiddens
+		setNumberOfLayersHiddens,
+
+		setValuesTraining
+
 	} from '../stores/storesConfiguration'
 
 	export let layerValues: number[] = []
+	console.log(layerValues);
+	
 	export let layerOutput: number = 0
 	export let layersFA: Array<string> = ['']
 	export let data: { pesos: [][][]; umbrales: [][] }
 	export let numberOfLayersHiddens: number
+
+
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -79,7 +86,7 @@
 		setFA(layersFA)
 		setLayerValues(layerValues)
 
-		setAppStatusLoading('Entrenando...')
+	
 		const values: training = await backPropagationMain(
 			valueInputIterations!,
 			valueInputRat!,
@@ -88,9 +95,17 @@
 			data.umbrales,
 			networkLayers
 		)
+		
+		setAppStatusLoading('Entrenando...')
+		setAppStatusTrainingModeBP()
+		
 		setMaxError(valueInputError!)
 		setIterationsError(values.iterationError[values.iterationError.length - 1])
-		setAppStatusTrainingModeBP()
+
+		setValuesTraining({
+			error: values.iterationError,
+			iterations: values.iterations
+		})
 	}
 </script>
 

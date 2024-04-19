@@ -47,6 +47,7 @@
 	})
 
 	$: {
+		
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
 
 		if (selectedNumberOfLayersHiddens !== 0) {
