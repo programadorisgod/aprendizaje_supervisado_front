@@ -116,20 +116,22 @@ export default function trainingFunction(net: network): training {
 		}
 		iterationError[iteration] /= net.numPatterns
 
-		console.log(iterationError[iteration])
-		console.log(iterationError)
+		//console.log(iterationError[iteration])
+	//console.log(iterationError)
 
-		valuesIteration.set({
-			error: iterationError[iteration],
-			iterationValue: iteration - 1
+		valuesIteration.update(() => {
+			return {
+				error: iterationError[iteration],
+				iterationValue: iteration - 1
+			}
 		})
 		// Siguiente ciclo
 		aux.current = 0
 		iteration++
-		console.log(iteration)
+		//console.log(iteration)
 	}
 
-	console.log(iterationError, w, u)
+	//console.log(iterationError, w, u)
 
 	return {
 		iterations: iteration - 1,

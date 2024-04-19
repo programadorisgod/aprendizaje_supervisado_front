@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Chart from 'chart.js/auto'
-	import { afterUpdate, onMount } from 'svelte'
+	import { onMount } from 'svelte'
 	import { valuesIteration } from '../../stores/storesConfiguration'
 
 	let container: HTMLCanvasElement | null
 	let chart: Chart | null = null
-	valuesIteration.subscribe((value) => console.log(value))
+	let chartData: number[] = []
+	let chartLabels: number[] = []
 
 	onMount(() => {
 		container = document.getElementById('container') as HTMLCanvasElement
@@ -25,12 +26,18 @@
 			}
 		})
 	})
-	afterUpdate(() => {
-		console.log('entro')
-		console.log($valuesIteration)
+	valuesIteration.subscribe((value) => {
+		console.log('Valor', value)
 
-		chart?.data.labels?.push($valuesIteration.iterationValue)
-		chart?.data.datasets[0].data.push($valuesIteration.error)
+		if (chart && chart.data && chart.data.labels && chart.data.datasets && chart.data.datasets[0]) {
+			console.log('entro a la grafica')
+
+			chart.data.labels.push(value.error)
+			chart.data.datasets[0].data.push(value.iterationValue)
+			console.log(chart.data.labels)
+       
+			chart.update()
+		}
 	})
 </script>
 
