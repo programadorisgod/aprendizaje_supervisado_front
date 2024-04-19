@@ -4,8 +4,6 @@ import { derivativeTanh, tanh } from '../activationFunctions/tanh'
 import type { layerManagement, network, training } from './../interface'
 
 export default function trainingFunction(net: network): training {
-	
-
 	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
 	const w: number[][][] = net.weights // pesos
@@ -116,12 +114,12 @@ export default function trainingFunction(net: network): training {
 		}
 		iterationError[iteration] /= net.numPatterns
 
-
 		// Siguiente ciclo
 		iteration++
 	}
 
-
+	console.log(iterationError.slice(1, iteration))
+	console.log(iteration - 1)
 
 	return {
 		iterations: iteration - 1,

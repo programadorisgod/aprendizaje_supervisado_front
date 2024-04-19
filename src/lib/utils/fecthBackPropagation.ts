@@ -19,6 +19,7 @@ export default async function customFetch(body: Array<number>) {
 		if (res.status === 401) throw new Error('Url  equivocada')
 
 		const data = await res.json()
+		
 
 		return data
 	} catch (error) {
