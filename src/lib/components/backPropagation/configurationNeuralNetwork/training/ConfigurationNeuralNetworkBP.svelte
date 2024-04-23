@@ -18,14 +18,15 @@
 		storeNumberOfLayersHiddens,
 		trainingFailed
 	} from '../stores/storesConfiguration'
-	import { afterUpdate, onMount } from 'svelte'
+	import { onMount } from 'svelte'
 
 	export let input_params: number[][]
+
 	let selectedNumberOfLayersHiddens: number = 0
 	let selectedFAOfLayersOutput: string = ''
-	let selectedAlogrithms: string = ''
+	let selectedAlogrithms: string | number
 	let layers: number[]
-	let layerValues: number[] = [0, 0, 0]
+	let layerValues: number[] = [input_params[0][0], 0, 0]
 	let layersFA: string[] = ['', '', '', '']
 	let nextStep: Element | null | undefined
 	let nextStep2: Element | null | undefined
@@ -38,7 +39,6 @@
 	let data: { pesos: [][][]; umbrales: [][] }
 
 	const updateArrays = () => {
-
 		if (selectedNumberOfLayersHiddens === 1) {
 			layerValues = Array(selectedNumberOfLayersHiddens + 2).fill(0)
 		} else if (selectedNumberOfLayersHiddens > 1) {
@@ -88,6 +88,7 @@
 			}
 			stepFinal?.classList.remove('fade_hidden')
 		}
+		console.log(selectedAlogrithms)
 	}
 	const handleMessage = (event: CustomEvent) => {
 		data = event.detail
@@ -155,7 +156,6 @@
 		}
 
 		show = true
-
 	}
 </script>
 
@@ -252,6 +252,7 @@
 			layerOutput={input_params[0][1]}
 			{layersFA}
 			numberOfLayersHiddens={selectedNumberOfLayersHiddens}
+			algorithmTraining={Number(selectedAlogrithms)}
 		/>
 	{/if}
 </article>

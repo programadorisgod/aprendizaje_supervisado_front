@@ -20,6 +20,7 @@
 	export let layersFA: Array<string> = ['']
 	export let data: { pesos: [][][]; umbrales: [][] }
 	export let numberOfLayersHiddens: number
+	export let algorithmTraining: number 
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -88,11 +89,12 @@
 			valueInputError!,
 			data.pesos,
 			data.umbrales,
-			networkLayers
+			networkLayers,
+			algorithmTraining
 		)
 
 		setAppStatusLoading('Entrenando...')
-		
+
 		setAppStatusTrainingModeBP()
 
 		setMaxError(valueInputError!)
