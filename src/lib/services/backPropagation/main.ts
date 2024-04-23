@@ -9,13 +9,13 @@ export default async function backPropagationMain(
 	maxError: number,
 	weights: number[][][],
 	thresholds: number[][],
-	layers: networkLayer[]
+	layers: networkLayer[],
+	bpType: number
 ): Promise<training> {
 	let dataBase: [number[], number[]][] = []
 
 	try {
 		dataBase = await fetchData()
-		
 	} catch (error) {
 		setAppStatusUnknowError()
 		return { weights: [[[]]], thresholds: [[]], iterationError: [], iterations: 0 }
@@ -28,7 +28,7 @@ export default async function backPropagationMain(
 	// return { iterations: 0, iterationError: [], weights: [[[]]], thresholds: [[]] }
 
 	// llamada a funcion de entrenamiento
-	return trainingFunction({
+	return await trainingFunction({
 		iterations,
 		learningRat,
 		maxError,
@@ -38,6 +38,7 @@ export default async function backPropagationMain(
 		numPatterns,
 		weights,
 		thresholds,
-		layers
+		layers,
+		bpType
 	})
 }

@@ -9,6 +9,7 @@ export interface network {
 	weights: number[][][]
 	thresholds: number[][]
 	layers: networkLayer[]
+	bpType: number
 }
 
 export interface networkLayer {

@@ -1,9 +1,10 @@
+import customFetch from '$lib/utils/fecthBackPropagation'
 import { derivativeSin, sin } from '../activationFunctions/seno'
 import { derivativeSigmoid, sigmoid } from '../activationFunctions/sigmoid'
 import { derivativeTanh, tanh } from '../activationFunctions/tanh'
 import type { layerManagement, network, training } from './../interface'
 
-export default function trainingFunction(net: network): training {
+export default async function trainingFunction(net: network): Promise<training> {
 	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
 	const w: number[][][] = net.weights // pesos
@@ -12,6 +13,8 @@ export default function trainingFunction(net: network): training {
 		indexes: [net.numEntries, ...net.layers.map((layer) => layer.neurons)],
 		current: 0
 	}
+
+	console.log(net.bpType)
 
 	while (net.maxError < iterationError.at(-1)! && iteration <= net.iterations) {
 		// Error por patron
@@ -56,12 +59,6 @@ export default function trainingFunction(net: network): training {
 						case 'SENO':
 							h[c + 1][i] = sin(h[c + 1][i])
 							der[c][i] = derivativeSin(h[c + 1][i])
-							break
-
-						default:
-							// Funcion lineal
-							h[c + 1][i] = 0
-							der[c][i] = 0
 							break
 					}
 				}
@@ -114,10 +111,16 @@ export default function trainingFunction(net: network): training {
 		}
 		iterationError[iteration] /= net.numPatterns
 
+		if (iteration % 3 == 0 && iterationError.at(-1) == iterationError[iteration - 1]) {
+			const obj = await customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
+			console.log(obj)
+		}
+
 		// Siguiente ciclo
 		iteration++
 		aux.current = 0
 	}
+	console.log(net.dataBase, iterationError, w, u)
 
 	return {
 		iterations: iteration - 1,
