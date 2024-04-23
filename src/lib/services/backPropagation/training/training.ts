@@ -116,10 +116,8 @@ export default function trainingFunction(net: network): training {
 
 		// Siguiente ciclo
 		iteration++
+		aux.current = 0
 	}
-
-	console.log(iterationError.slice(1, iteration))
-	console.log(iteration - 1)
 
 	return {
 		iterations: iteration - 1,

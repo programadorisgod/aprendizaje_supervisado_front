@@ -38,15 +38,12 @@
 	let data: { pesos: [][][]; umbrales: [][] }
 
 	const updateArrays = () => {
-		console.log(selectedNumberOfLayersHiddens)
 
 		if (selectedNumberOfLayersHiddens === 1) {
 			layerValues = Array(selectedNumberOfLayersHiddens + 2).fill(0)
 		} else if (selectedNumberOfLayersHiddens > 1) {
 			layerValues = Array(selectedNumberOfLayersHiddens + 1).fill(0)
 		} else {
-			console.log('siempre entro')
-
 			layerValues = Array(selectedNumberOfLayersHiddens).fill(0)
 		}
 
@@ -64,8 +61,6 @@
 
 	$: {
 		layers = Array.from({ length: selectedNumberOfLayersHiddens }, (_, i) => i + 1)
-		console.log(layers)
-		console.log(layerValues)
 
 		if (selectedNumberOfLayersHiddens !== 0) {
 			const currentStep = document.querySelector('.step:not(fade_hidden)')
@@ -103,14 +98,10 @@
 		if ($trainingFailed) {
 			updateArrays()
 		}
-		console.log(selectedNumberOfLayersHiddens, 'sl')
 	}
 	const handleInputChange = (event: Event, index: number) => {
 		const target = event.target as HTMLInputElement
-		console.log(layerValues)
-
 		layerValues[index] = Number(target.value)
-		console.log(layerValues)
 	}
 	const handledSelectChange = (event: Event, index?: number) => {
 		const target = event.target as HTMLSelectElement
@@ -119,7 +110,6 @@
 		} else {
 			layersFA[3] = target.value
 		}
-		console.log(layersFA)
 	}
 	const handleChange = (event: Event) => {
 		const target = event.target as HTMLInputElement
@@ -166,10 +156,6 @@
 
 		show = true
 
-		console.log(layerValues)
-		console.log(selectedNumberOfLayersHiddens)
-
-		console.log(layersFA)
 	}
 </script>
 

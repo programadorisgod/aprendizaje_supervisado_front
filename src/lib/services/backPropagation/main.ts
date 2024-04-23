@@ -15,6 +15,7 @@ export default async function backPropagationMain(
 
 	try {
 		dataBase = await fetchData()
+		
 	} catch (error) {
 		setAppStatusUnknowError()
 		return { weights: [[[]]], thresholds: [[]], iterationError: [], iterations: 0 }

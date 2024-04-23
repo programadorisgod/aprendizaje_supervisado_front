@@ -5,7 +5,6 @@
 
 	import { createEventDispatcher, onMount } from 'svelte'
 	export let layerValues = []
-	console.log(layerValues);
 	let data = null
 	const distPatch = createEventDispatcher()
 	onMount(async () => {

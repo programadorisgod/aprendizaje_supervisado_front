@@ -13,7 +13,7 @@ export interface network {
 
 export interface networkLayer {
 	neurons: number
-	activationFunction: String
+	activationFunction: string
 }
 
 export interface training {
