@@ -14,6 +14,8 @@ export default async function backPropagationMain(
 ): Promise<training> {
 	let dataBase: [number[], number[]][] = []
 
+	//console.log(thresholds, weights)
+
 	try {
 		dataBase = await fetchData()
 	} catch (error) {

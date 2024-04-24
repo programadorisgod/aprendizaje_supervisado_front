@@ -14,7 +14,7 @@ export default async function trainingFunction(net: network): Promise<training> 
 		current: 0
 	}
 
-	console.log(net.bpType)
+	//console.log(net.bpType, w, u)
 
 	while (net.maxError < iterationError.at(-1)! && iteration <= net.iterations) {
 		// Error por patron
@@ -54,16 +54,21 @@ export default async function trainingFunction(net: network): Promise<training> 
 							break
 						case 'SG':
 							h[c + 1][i] = sigmoid(h[c + 1][i])
-							der[c][i] = derivativeSigmoid(h[c + 1][i])
+							der[c][i] = c != net.layers.length - 1 ? derivativeSigmoid(h[c + 1][i]) : 1
 							break
 						case 'SENO':
 							h[c + 1][i] = sin(h[c + 1][i])
-							der[c][i] = derivativeSin(h[c + 1][i])
+							der[c][i] = c != net.layers.length - 1 ? derivativeSin(h[c + 1][i]) : 1
+							break
+						default:
+							der[c][i] = 1
 							break
 					}
 				}
 				aux.current++
 			}
+			aux.current = aux.indexes.length - 1
+
 			// Error lineal capa salida
 			for (let k = 0; k < net.numOutputs; k++) {
 				e[e.length - 1][k] = net.dataBase[p][1][k] - h[h.length - 1][k]
@@ -75,7 +80,7 @@ export default async function trainingFunction(net: network): Promise<training> 
 				for (let i = 0; i < aux.indexes[aux.current - 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						e[c][i] += e[c + 1][j] * w[c][i][j]
+						e[c][i] += e[c + 1][j] * w[c + 1][j][i]
 					}
 				}
 				aux.current--
@@ -85,7 +90,7 @@ export default async function trainingFunction(net: network): Promise<training> 
 			for (let i = 0; i < net.numOutputs; i++) {
 				ep[p] += e[net.layers.length - 1][i]
 			}
-			ep[p] = ep[p] / net.numOutputs
+			ep[p] = Math.abs(ep[p]) / net.numOutputs
 
 			// Actualizar pesos/umbrales
 			aux.current = 0
@@ -95,9 +100,10 @@ export default async function trainingFunction(net: network): Promise<training> 
 				for (let i = 0; i < aux.indexes[aux.current + 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						w[c][i][j] = w[c][i][j] + 2 * net.learningRat * e[c][i] * der[c][i] * h[c][j]
+						w[c][i][j] =
+							w[c][i][j] + net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * h[c][j]
 					}
-					u[c][i] = u[c][i] + 2 * net.learningRat * e[c][i] * der[c][i] * 1
+					u[c][i] = u[c][i] + net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * 1
 				}
 				aux.current++
 			}
@@ -109,10 +115,10 @@ export default async function trainingFunction(net: network): Promise<training> 
 		for (let i = 0; i < ep.length; i++) {
 			iterationError[iteration] += ep[i]
 		}
-		iterationError[iteration] /= net.numPatterns
+		iterationError[iteration] = Math.abs(iterationError[iteration]) / net.numPatterns
 
-		if (iteration % 3 == 0 && iterationError.at(-1) == iterationError[iteration - 1]) {
-			const obj = await customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
+		if (iteration % 3 && iterationError.at(-1) == iterationError[iteration - 1]) {
+			const obj = customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
 			console.log(obj)
 		}
 
@@ -120,7 +126,8 @@ export default async function trainingFunction(net: network): Promise<training> 
 		iteration++
 		aux.current = 0
 	}
-	console.log(net.dataBase, iterationError, w, u)
+
+	console.log(iterationError, w, u)
 
 	return {
 		iterations: iteration - 1,
