@@ -1,4 +1,4 @@
-import customFetch from '$lib/utils/fecthBackPropagation'
+/* import customFetch from '$lib/utils/fecthBackPropagation' */
 import { derivativeSin, sin } from '../activationFunctions/seno'
 import { derivativeSigmoid, sigmoid } from '../activationFunctions/sigmoid'
 import { derivativeTanh, tanh } from '../activationFunctions/tanh'
@@ -117,10 +117,10 @@ export default async function trainingFunction(net: network): Promise<training> 
 		}
 		iterationError[iteration] = Math.abs(iterationError[iteration]) / net.numPatterns
 
-		if (iteration % 3 && iterationError.at(-1) == iterationError[iteration - 1]) {
-			const obj = customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
+	/* 	if (iteration % 3 && iterationError.at(-1) == iterationError[iteration - 1]) {
+			const obj = await customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
 			console.log(obj)
-		}
+		} */
 
 		// Siguiente ciclo
 		iteration++

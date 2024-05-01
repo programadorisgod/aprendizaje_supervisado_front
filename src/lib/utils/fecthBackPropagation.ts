@@ -1,9 +1,8 @@
 export default async function customFetch(body: Array<number>) {
 	try {
-
 		const { VITE_BASE_URL } = import.meta.env
 
-		const url = `${VITE_BASE_URL}/backpropagation`
+		const url = `${VITE_BASE_URL}/backpropagation/values`
 
 		const res = await fetch(url, {
 			method: 'POST',
@@ -19,7 +18,6 @@ export default async function customFetch(body: Array<number>) {
 		if (res.status === 401) throw new Error('Url  equivocada')
 
 		const data = await res.json()
-		
 
 		return data
 	} catch (error) {

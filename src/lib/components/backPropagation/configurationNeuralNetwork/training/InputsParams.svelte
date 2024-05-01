@@ -20,7 +20,7 @@
 	export let layersFA: Array<string> = ['']
 	export let data: { pesos: [][][]; umbrales: [][] }
 	export let numberOfLayersHiddens: number
-	export let algorithmTraining: number 
+	export let algorithmTraining: number
 
 	let valueInputRat: number | undefined
 	let valueInputError: number | undefined
@@ -82,7 +82,7 @@
 		setNumberOfLayersHiddens(numberOfLayersHiddens)
 		setFA(layersFA)
 		setLayerValues(layerValues)
-
+		
 		const values: training = await backPropagationMain(
 			valueInputIterations!,
 			valueInputRat!,

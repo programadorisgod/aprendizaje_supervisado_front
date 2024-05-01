@@ -7,9 +7,17 @@
 	export let layerValues = []
 	let data = null
 	const distPatch = createEventDispatcher()
+
+	if (layerValues.length > 3) {
+		layerValues.pop()
+	}
+	let fetched = false
 	onMount(async () => {
-		data = await customFetch(layerValues)
-		distPatch('message', data)
+		if (!fetched) {
+			data = await customFetch(layerValues)
+			distPatch('message', data)
+			fetched = true
+		}
 	})
 </script>
 

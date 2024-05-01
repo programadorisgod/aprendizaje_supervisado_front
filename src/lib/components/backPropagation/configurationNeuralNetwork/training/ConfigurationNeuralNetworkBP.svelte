@@ -39,16 +39,46 @@
 	let data: { pesos: [][][]; umbrales: [][] }
 
 	const updateArrays = () => {
-		if (selectedNumberOfLayersHiddens === 1) {
+		const newSize =
+			selectedNumberOfLayersHiddens > 1
+				? selectedNumberOfLayersHiddens + 1
+				: selectedNumberOfLayersHiddens
+
+		if (layerValues) {
+			if (newSize === 1) {
+				layerValues = [1, 0, 0]
+			} else {
+				layerValues = [
+					...layerValues.slice(0, selectedNumberOfLayersHiddens),
+					...Array(Math.max(0, selectedNumberOfLayersHiddens - layerValues.length)).fill(0)
+				]
+				if (layerValues.length === 2) {
+					layerValues.push(0)
+				}
+			}
+		} else {
+			if (newSize === 1) {
+				layerValues = [1, 0, 0]
+			} else {
+				layerValues = Array(newSize).fill(0)
+			}
+		}
+
+		/* if (selectedNumberOfLayersHiddens === 1) {
 			layerValues = Array(selectedNumberOfLayersHiddens + 2).fill(0)
 		} else if (selectedNumberOfLayersHiddens > 1) {
 			layerValues = Array(selectedNumberOfLayersHiddens + 1).fill(0)
 		} else {
 			layerValues = Array(selectedNumberOfLayersHiddens).fill(0)
-		}
+		} */
 
-		layersFA = Array(selectedNumberOfLayersHiddens + 1).fill('')
-		layersFA[layersFA.length - 1] = selectedFAOfLayersOutput
+		if (layersFA) {
+			layersFA.fill('', selectedNumberOfLayersHiddens, layersFA.length - 1)
+			layersFA[layersFA.length - 1] = selectedFAOfLayersOutput
+		} else {
+			layersFA = Array(selectedNumberOfLayersHiddens + 1).fill('')
+			layersFA[layersFA.length - 1] = selectedFAOfLayersOutput
+		}
 	}
 	onMount(() => {
 		if ($trainingFailed) {
@@ -88,7 +118,6 @@
 			}
 			stepFinal?.classList.remove('fade_hidden')
 		}
-		console.log(selectedAlogrithms)
 	}
 	const handleMessage = (event: CustomEvent) => {
 		data = event.detail
@@ -154,7 +183,6 @@
 		} else {
 			error = false
 		}
-
 		show = true
 	}
 </script>
