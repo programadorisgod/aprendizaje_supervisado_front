@@ -60,6 +60,8 @@ export default async function simulation(
 
 						break
 				}
+
+				h[c + 1][i] = Math.abs(Math.round(h[c + 1][i]))
 			}
 			aux.current++
 		}
