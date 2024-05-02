@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { setAppStatusModelMode, setModelBackPropagation } from '$lib/stores/stores'
+	import {
+		setAppStatusModelMode,
+		setModelBackPropagation,
+		setUPloadFileToSimulationBP
+	} from '$lib/stores/stores'
+	import sendInformationNeuralNetwork from '$lib/utils/sendConfiguration'
 	import {
 		configurationNeuralNetwork,
 		errorIteration,
@@ -11,13 +16,14 @@
 	let backToTraining: boolean = false
 	let isVisible: boolean = false
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		if (backToTraining) {
 			setTrainingFailed()
 			setModelBackPropagation()
 			setAppStatusModelMode()
-			
 		} else {
+			setUPloadFileToSimulationBP()
+			await sendInformationNeuralNetwork($configurationNeuralNetwork)
 			console.log($configurationNeuralNetwork)
 		}
 	}

@@ -11,6 +11,8 @@ export const APP_STATUS = {
 	SIMULATION_MODE: 5,
 	UPLOAD_FILE_TO_TRAIN: 6,
 	TRAINING_MODE_BP: 7,
+	SIMULATION_MODE_BP: 8,
+	UPLOAD_SIMULATION_MODE_BP: 9,
 	ERROR: -1
 }
 export const tv: TrainingValues = {
@@ -38,13 +40,18 @@ export const setAppInitMode = () => {
 export const setUpoladFileToTrain = () => {
 	appStatus.set(APP_STATUS.UPLOAD_FILE_TO_TRAIN)
 }
-
+export const setUPloadFileToSimulationBP = () => {
+	appStatus.set(APP_STATUS.UPLOAD_SIMULATION_MODE_BP)
+}
 export const setAppStatusError = () => {
 	appStatus.set(APP_STATUS.ERROR)
 }
 
 export const setModelBackPropagation = () => {
 	modelBackPropagation.set(true)
+}
+export const setModeSimulationBP = () => {
+	appStatus.set(APP_STATUS.SIMULATION_MODE_BP)
 }
 export const setAppStatusLoading = (message?: string) => {
 	appStatus.set(APP_STATUS.LOADING)

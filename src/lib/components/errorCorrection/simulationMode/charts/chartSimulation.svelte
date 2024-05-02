@@ -9,6 +9,12 @@
 	} from 'flowbite-svelte'
 	import { Line } from 'svelte-chartjs'
 	import EndOfTraining from './endOfSimulation.svelte'
+	import { onMount } from 'svelte'
+	import CanvasConfetti from 'canvas-confetti'
+
+	onMount(() => {
+		CanvasConfetti()
+	})
 
 	export let labels: number[][]
 	export let data: number[][]
@@ -19,6 +25,7 @@
 	const realOuputs = labels.map((label: number[]) => label[1])
 
 	const p = labels.map((labels: number[]) => labels[0].join(' '))
+
 	const patrons = Array.from({ length: labels.length }, (_, index) => index)
 
 	if (data[0]?.length > 1) {

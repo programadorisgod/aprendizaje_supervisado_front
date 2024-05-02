@@ -82,7 +82,7 @@
 		setNumberOfLayersHiddens(numberOfLayersHiddens)
 		setFA(layersFA)
 		setLayerValues(layerValues)
-		
+
 		const values: training = await backPropagationMain(
 			valueInputIterations!,
 			valueInputRat!,
@@ -103,6 +103,7 @@
 
 		setConfiguration({
 			networkLayers: networkLayers,
+			bpType: algorithmTraining,
 			thresholds: values.thresholds,
 			weights: values.weights
 		})

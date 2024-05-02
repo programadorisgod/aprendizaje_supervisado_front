@@ -9,11 +9,14 @@ export const valuesIterationTraining = writable<valuesIteration>()
 export const errorIteration = writable<number>(0)
 export const maxErorr = writable<number>(0)
 export const configurationNeuralNetwork = writable<typeConfiguration>()
+export const simulationStore = writable<number[][]>()
+export const databaseStore = writable<number[][]>()
 
 type valuesIteration = {
 	error: number[]
 	iterations: number
 }
+
 export const setTrainingFailed = () => {
 	trainingFailed.set(true)
 }

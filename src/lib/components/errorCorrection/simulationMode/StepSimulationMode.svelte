@@ -7,7 +7,6 @@
 	import { writable } from 'svelte/store'
 	let simulationsStore = writable<number[][]>([])
 	let databaseStore = writable<number[][]>([])
-	import CanvasConfetti from 'canvas-confetti'
 
 	onMount(async () => {
 		const r = await fetchData('simulation')
@@ -28,7 +27,6 @@
 			<p>Realizando simulación...</p>
 		{:then [simulations, database]}
 			<ChartSimulation labels={database} data={simulations} />
-			{CanvasConfetti()}
 		{/await}
 	{/if}
 </div>

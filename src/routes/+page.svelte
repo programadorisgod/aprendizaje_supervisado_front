@@ -9,6 +9,8 @@
 	import StepSimulationMode from '$components/errorCorrection/simulationMode/StepSimulationMode.svelte'
 	import InitMode from '$components/InitMode.svelte'
 	import ViewChartTraining from '$components/backPropagation/configurationNeuralNetwork/training/ViewChartTraining.svelte'
+	import StepSimulation from '$components/backPropagation/simulation/StepSimulation.svelte'
+	import StepUploadBP from '$components/backPropagation/simulation/StepUploadBP.svelte'
 </script>
 
 {#if $appStatus === APP_STATUS.INIT}
@@ -33,6 +35,10 @@
 	<StepSimulationMode />
 {:else if $appStatus === APP_STATUS.TRAINING_MODE_BP}
 	<ViewChartTraining />
+{:else if $appStatus === APP_STATUS.UPLOAD_SIMULATION_MODE_BP}
+	<StepUploadBP />
+{:else if $appStatus === APP_STATUS.SIMULATION_MODE_BP}
+	<StepSimulation />
 {:else}
 	<Alert>
 		<span class="font-medium">Error</span>
