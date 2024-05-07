@@ -8,7 +8,6 @@ export default async function simulation(
 	weights: number[][][],
 	thresholds: number[][],
 	layers: networkLayer[],
-	bpType: number
 ): Promise<Array<Array<number>>> {
 	let dataBase: [number[], number[]][] = []
 
@@ -22,7 +21,7 @@ export default async function simulation(
 
 	const numEntries: number = dataBase[0][0].length
 
-	const numOutputs: number = dataBase[0][1].length
+	//const numOutputs: number = dataBase[0][1].length
 
 	const aux: layerManagement = {
 		indexes: [numEntries, ...layers.map((layer) => layer.neurons)],
@@ -61,13 +60,14 @@ export default async function simulation(
 						break
 				}
 
-				h[c + 1][i] = Math.abs(Math.round(h[c + 1][i]))
+				//h[c + 1][i] = Math.round(h[c + 1][i])
 			}
 			aux.current++
 		}
 		yr.push(h.at(-1)!)
 		aux.current = 0
 	}
+	console.log(yr)
 
 	return yr
 }
