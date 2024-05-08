@@ -24,7 +24,6 @@
 		} else {
 			setUPloadFileToSimulationBP()
 			await sendInformationNeuralNetwork($configurationNeuralNetwork)
-			console.log($configurationNeuralNetwork)
 		}
 	}
 
@@ -33,7 +32,7 @@
 		isVisible = value
 	}
 
-	if ($errorIteration > $maxErorr) {
+	$: if (!isNaN($errorIteration) && $errorIteration > $maxErorr) {
 		backToTraining = true
 	} else {
 		backToTraining = false
