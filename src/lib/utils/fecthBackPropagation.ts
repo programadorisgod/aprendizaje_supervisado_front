@@ -14,7 +14,7 @@ export default async function customFetch(body: Array<number>) {
 			})
 		})
 
-		if (!res.ok) throw new Error('La petición falló')
+		//if (!res.ok) throw new Error('La petición falló')
 		if (res.status === 401) throw new Error('Url  equivocada')
 
 		const data = await res.json()

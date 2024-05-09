@@ -28,3 +28,8 @@ export interface layerManagement {
 	indexes: number[]
 	current: number
 }
+
+export interface init {
+	weight: number[][][]
+	thresholds: number[][]
+}

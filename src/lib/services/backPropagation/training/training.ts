@@ -1,20 +1,22 @@
 /* import customFetch from '$lib/utils/fecthBackPropagation' */
+import customFetch from '$lib/utils/fecthBackPropagation'
 import { derivativeSin, sin } from '../activationFunctions/seno'
 import { derivativeSigmoid, sigmoid } from '../activationFunctions/sigmoid'
 import { derivativeTanh, tanh } from '../activationFunctions/tanh'
-import type { layerManagement, network, training } from './../interface'
+import initWU from '../init-w-u/init-w-u'
+import type { init, layerManagement, network, training } from './../interface'
 
 export default async function trainingFunction(net: network): Promise<training> {
 	const iterationError: number[] = [1] // Error iteracion (sin el primer elemento)
 	let iteration: number = 1 // iteraciones (inicia en 1 en vez de 0 porque hay uno de mas en iterationError)
-	const w: number[][][] = net.weights // pesos
-	const u: number[][] = net.thresholds // umbrales
+	let w: number[][][] = net.weights // pesos
+	let u: number[][] = net.thresholds // umbrales
 	const aux: layerManagement = {
 		indexes: [net.numEntries, ...net.layers.map((layer) => layer.neurons)],
 		current: 0
 	}
 
-	//console.log(net.bpType, w, u)
+	console.log(net)
 
 	while (net.maxError < iterationError.at(-1)! && iteration <= net.iterations) {
 		// Error por patron
@@ -38,7 +40,7 @@ export default async function trainingFunction(net: network): Promise<training> 
 				for (let i = 0; i < aux.indexes[aux.current + 1]; i++) {
 					// por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						h[c + 1][i] += h[c][j] * w[c][i][j]
+						h[c + 1][i] += parseFloat((h[c][j] * w[c][i][j]).toFixed(5))
 					}
 
 					// Restar el umbral
@@ -48,17 +50,22 @@ export default async function trainingFunction(net: network): Promise<training> 
 					switch (net.layers[c].activationFunction) {
 						case 'TH':
 							// h sub i es igual a fa(suma - u)
-							h[c + 1][i] = tanh(h[c + 1][i])
+							h[c + 1][i] = parseFloat(tanh(h[c + 1][i]).toFixed(5))
 							// Derivada y por si es la capa de salida
-							der[c][i] = c != net.layers.length - 1 ? derivativeTanh(h[c + 1][i]) : 1
+							der[c][i] =
+								c != net.layers.length - 1 ? parseFloat(derivativeTanh(h[c + 1][i]).toFixed(5)) : 1
 							break
 						case 'SG':
-							h[c + 1][i] = sigmoid(h[c + 1][i])
-							der[c][i] = c != net.layers.length - 1 ? derivativeSigmoid(h[c + 1][i]) : 1
+							h[c + 1][i] = parseFloat(sigmoid(h[c + 1][i]).toFixed(5))
+							der[c][i] =
+								c != net.layers.length - 1
+									? parseFloat(derivativeSigmoid(h[c + 1][i]).toFixed(5))
+									: 1
 							break
 						case 'SENO':
-							h[c + 1][i] = sin(h[c + 1][i])
-							der[c][i] = c != net.layers.length - 1 ? derivativeSin(h[c + 1][i]) : 1
+							h[c + 1][i] = parseFloat(sin(h[c + 1][i]).toFixed(5))
+							der[c][i] =
+								c != net.layers.length - 1 ? parseFloat(derivativeSin(h[c + 1][i]).toFixed(5)) : 1
 							break
 						default:
 							der[c][i] = 1
@@ -80,7 +87,7 @@ export default async function trainingFunction(net: network): Promise<training> 
 				for (let i = 0; i < aux.indexes[aux.current - 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						e[c][i] += e[c + 1][j] * w[c + 1][j][i]
+						e[c][i] += parseFloat((e[c + 1][j] * w[c + 1][j][i]).toFixed(5))
 					}
 				}
 				aux.current--
@@ -100,13 +107,20 @@ export default async function trainingFunction(net: network): Promise<training> 
 				for (let i = 0; i < aux.indexes[aux.current + 1]; i++) {
 					// Por cada indice interior
 					for (let j = 0; j < aux.indexes[aux.current]; j++) {
-						w[c][i][j] =
-							w[c][i][j] + net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * h[c][j]
+						w[c][i][j] = parseFloat(
+							(
+								w[c][i][j] +
+								net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * h[c][j]
+							).toFixed(5)
+						)
 					}
-					u[c][i] = u[c][i] + net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * 1
+					u[c][i] = parseFloat(
+						(u[c][i] + net.bpType * 2 * net.learningRat * e[c][i] * der[c][i] * 1).toFixed(5)
+					)
 				}
 				aux.current++
 			}
+			console.log(e, h, w, u, der)
 		}
 
 		// Error por iteracion
@@ -117,17 +131,17 @@ export default async function trainingFunction(net: network): Promise<training> 
 		}
 		iterationError[iteration] = Math.abs(iterationError[iteration]) / net.numPatterns
 
-	/* 	if (iteration % 3 && iterationError.at(-1) == iterationError[iteration - 1]) {
-			const obj = await customFetch(aux.indexes.slice(1, aux.indexes.length - 2))
-			console.log(obj)
-		} */
+		if (iteration % 3 && iterationError.at(-1) == iterationError[iteration - 1]) {
+			const obj: init = initWU(aux.indexes)
+			w = obj.weight
+			u = obj.thresholds
+		}
 
 		// Siguiente ciclo
 		iteration++
 		aux.current = 0
 	}
-
-	console.log(iterationError, w, u)
+	console.log(iterationError)
 
 	return {
 		iterations: iteration - 1,

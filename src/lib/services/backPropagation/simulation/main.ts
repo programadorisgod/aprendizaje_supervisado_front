@@ -7,21 +7,16 @@ import type { layerManagement, networkLayer } from '../interface'
 export default async function simulation(
 	weights: number[][][],
 	thresholds: number[][],
-	layers: networkLayer[],
+	layers: networkLayer[]
 ): Promise<Array<Array<number>>> {
 	let dataBase: [number[], number[]][] = []
 
 	dataBase = await fetchData()
 
 	const w: number[][][] = weights
-
 	const u: number[][] = thresholds
-
 	const numPatterns = dataBase.length
-
 	const numEntries: number = dataBase[0][0].length
-
-	//const numOutputs: number = dataBase[0][1].length
 
 	const aux: layerManagement = {
 		indexes: [numEntries, ...layers.map((layer) => layer.neurons)],
@@ -60,14 +55,18 @@ export default async function simulation(
 						break
 				}
 
-				//h[c + 1][i] = Math.round(h[c + 1][i])
+				if (c == layers.length - 1) {
+					h[c + 1][i] = h[c + 1][i] < 0.5 ? 0 : 1
+				}
 			}
 			aux.current++
 		}
+		console.log(h)
+
 		yr.push(h.at(-1)!)
 		aux.current = 0
 	}
-	console.log(yr)
+	console.log(weights, thresholds, layers)
 
 	return yr
 }
