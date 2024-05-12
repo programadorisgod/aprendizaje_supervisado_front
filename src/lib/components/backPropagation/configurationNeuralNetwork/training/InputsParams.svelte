@@ -149,7 +149,7 @@
 		class="text-black w-36 h-10 rounded-md outline-none mt-2"
 		placeholder="Error"
 		on:keyup={handleKeyUpError}
-		step="0.0001"
+		step="0.0000001"
 	/>
 	{#if invalidError}
 		<p class="text-red-600">Por favor ingrese un error valido entre 0 y 0.1</p>
