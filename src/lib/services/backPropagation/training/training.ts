@@ -1,5 +1,4 @@
 /* import customFetch from '$lib/utils/fecthBackPropagation' */
-import customFetch from '$lib/utils/fecthBackPropagation'
 import { derivativeSin, sin } from '../activationFunctions/seno'
 import { derivativeSigmoid, sigmoid } from '../activationFunctions/sigmoid'
 import { derivativeTanh, tanh } from '../activationFunctions/tanh'

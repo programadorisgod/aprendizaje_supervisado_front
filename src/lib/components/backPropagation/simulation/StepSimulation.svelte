@@ -11,7 +11,7 @@
 
 	onMount(async () => {
 		const res = await getJson()
-		const sm = await simulation(res.weights, res.thresholds, res.networkLayers, res.bpType)
+		const sm = await simulation(res.weights, res.thresholds, res.networkLayers)
 
 		simulationStore.set(sm)
 
@@ -21,6 +21,7 @@
 </script>
 
 <div class="w-full h-full flex flex-col justify-center items-center">
+	
 	{#await Promise.all([$simulationStore, $databaseStore]) then [simulations, database]}
 		<ChartSimulation labels={database} data={simulations} />
 	{/await}

@@ -6,10 +6,17 @@
 	import ConfigurationNeuralNetwork from '../errorCorrection/configurationNeuralNetwork/configurationNeuralNetwork.svelte'
 	import { modelBackPropagation } from '$lib/stores/stores'
 	import ConfigurationNeuralNetworkBp from '$components/backPropagation/configurationNeuralNetwork/training/ConfigurationNeuralNetworkBP.svelte'
+	import { typeLetter } from '$components/backPropagation/configurationNeuralNetwork/stores/storesConfiguration'
 
 	let input_params: Array<Array<number>>
 
 	onMount(async () => {
+		const typeFile = await fetchData()
+
+		if (typeof typeFile[0][0][0] === 'string') {
+			typeLetter.set(true)
+		}
+
 		input_params = await fetchData('input-params')
 	})
 </script>

@@ -11,6 +11,7 @@ export const maxErorr = writable<number>(0)
 export const configurationNeuralNetwork = writable<typeConfiguration>()
 export const simulationStore = writable<number[][]>()
 export const databaseStore = writable<number[][]>()
+export const typeLetter = writable<boolean>(false)
 
 type valuesIteration = {
 	error: number[]

@@ -1,7 +1,10 @@
 import { setAppStatusUnknowError } from '$lib/stores/stores'
 import fetchData from '$lib/utils/fetchData'
+import { get } from 'svelte/store'
 import type { networkLayer, training } from './interface'
 import trainingFunction from './training/training'
+import { typeLetter } from '$components/backPropagation/configurationNeuralNetwork/stores/storesConfiguration'
+import fecthLetter from '$lib/utils/fetchTypeLetter'
 
 export default async function backPropagationMain(
 	iterations: number,
@@ -14,9 +17,13 @@ export default async function backPropagationMain(
 ): Promise<training> {
 	let dataBase: [number[], number[]][] = []
 
-
 	try {
-		dataBase = await fetchData()
+		if (get(typeLetter)) {
+			dataBase = await fecthLetter()
+		} else {
+			dataBase = await fetchData()
+			console.log('entro')
+		}
 	} catch (error) {
 		setAppStatusUnknowError()
 		return { weights: [[[]]], thresholds: [[]], iterationError: [], iterations: 0 }

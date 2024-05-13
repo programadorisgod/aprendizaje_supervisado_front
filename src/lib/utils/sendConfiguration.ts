@@ -1,3 +1,4 @@
+import { setAppStatusUnknowError } from '$lib/stores/stores'
 import type { typeConfiguration } from '$lib/types/configurationNeuralNetwork'
 
 export default async function sendInformationNeuralNetwork(config: typeConfiguration) {
@@ -20,5 +21,6 @@ export default async function sendInformationNeuralNetwork(config: typeConfigura
 		return data
 	} catch (error) {
 		console.log(error)
+		setAppStatusUnknowError()
 	}
 }

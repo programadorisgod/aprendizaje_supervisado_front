@@ -24,7 +24,6 @@ export default async function fetchData(params?: string, body?: SimulationValues
 
 		return data
 	} catch (error) {
-
 		setAppStatusUnknowError()
 	}
 }
