@@ -1,8 +1,11 @@
 import fetchData from '$lib/utils/fetchData'
+import { get } from 'svelte/store'
 import { sin } from '../activationFunctions/seno'
 import { sigmoid } from '../activationFunctions/sigmoid'
 import { tanh } from '../activationFunctions/tanh'
 import type { layerManagement, networkLayer } from '../interface'
+import fecthLetter from '$lib/utils/fetchTypeLetter'
+import { typeLetter } from '$components/backPropagation/configurationNeuralNetwork/stores/storesConfiguration'
 
 export default async function simulation(
 	weights: number[][][],
@@ -11,7 +14,11 @@ export default async function simulation(
 ): Promise<Array<Array<number>>> {
 	let dataBase: [number[], number[]][] = []
 
-	dataBase = await fetchData()
+	if (get(typeLetter)) {
+		dataBase = await fecthLetter()
+	} else {
+		dataBase = await fetchData()
+	}
 
 	const w: number[][][] = weights
 	const u: number[][] = thresholds

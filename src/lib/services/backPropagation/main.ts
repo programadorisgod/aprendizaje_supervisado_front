@@ -22,7 +22,6 @@ export default async function backPropagationMain(
 			dataBase = await fecthLetter()
 		} else {
 			dataBase = await fetchData()
-			console.log('entro')
 		}
 	} catch (error) {
 		setAppStatusUnknowError()

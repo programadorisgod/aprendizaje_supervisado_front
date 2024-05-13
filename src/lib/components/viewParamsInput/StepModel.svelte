@@ -12,8 +12,11 @@
 
 	onMount(async () => {
 		const typeFile = await fetchData()
+		console.log(typeFile)
 
 		if (typeof typeFile[0][0][0] === 'string') {
+			console.log('entro')
+
 			typeLetter.set(true)
 		}
 
